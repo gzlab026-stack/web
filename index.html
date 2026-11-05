@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GZLab · Automatización de procesos con IA</title>
+<meta name="description" content="GZLab automatiza procesos con inteligencia artificial: atención al cliente por WhatsApp y teléfono, reservas, avisos y conexión entre herramientas.">
+<meta name="theme-color" content="#14161B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314161B'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='28' font-weight='700' fill='%23D6B04A' text-anchor='middle'%3EGZ%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#14161B; --s1:#1B1E25; --s2:#232730; --li:#2F3440; --li2:#454B59;
+  --tx:#F4EFE4; --mu:#B9B2A4; --ac:#D6B04A; --ac2:#F0D27A; --acBg:rgba(214,176,74,.10);
+  --radio:16px; --ancho:1120px;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img,svg{max-width:100%;display:block}
+.contenedor{width:100%;max-width:var(--ancho);margin:0 auto;padding:0 16px}
+@media (min-width:720px){.contenedor{padding:0 32px}}
+
+/* Fondo: cuadrícula suave y brillo dorado */
+.fondo{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(600px 400px at 85% -5%, rgba(214,176,74,.14), transparent 70%),
+    radial-gradient(500px 380px at -10% 35%, rgba(214,176,74,.06), transparent 70%),
+    linear-gradient(var(--bg),var(--bg));}
+.fondo::after{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(244,239,228,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(244,239,228,.035) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom,#000 0%,transparent 75%);-webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 75%)}
+
+/* Cabecera */
+header{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:rgba(20,22,27,.72);border-bottom:1px solid rgba(47,52,64,.6)}
+.barra{display:flex;align-items:center;justify-content:space-between;height:64px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-.01em}
+.marca .logo{width:34px;height:34px;border-radius:9px;background:var(--acBg);border:1px solid rgba(214,176,74,.45);display:grid;place-items:center;color:var(--ac);font-size:14px;font-weight:800;letter-spacing:.02em}
+.marca span b{color:var(--ac)}
+nav ul{display:none;list-style:none;margin:0;padding:0;gap:28px}
+nav a{text-decoration:none;color:var(--mu);font-size:15px}
+nav a:hover{color:var(--tx)}
+@media (min-width:820px){nav ul{display:flex}}
+.boton{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:15px;border-radius:999px;padding:11px 20px;transition:transform .15s ease, background .15s ease, border-color .15s ease}
+.boton:hover{transform:translateY(-1px)}
+.boton.primario{background:var(--ac);color:#14161B}
+.boton.primario:hover{background:var(--ac2)}
+.boton.secundario{border:1px solid var(--li2);color:var(--tx)}
+.boton.secundario:hover{border-color:var(--ac)}
+.barra .boton{padding:8px 16px;font-size:14px}
+
+/* Portada */
+.portada{padding:64px 0 40px}
+.portada .rejilla{display:grid;gap:48px;align-items:center}
+@media (min-width:960px){.portada{padding:96px 0 72px}.portada .rejilla{grid-template-columns:1.05fr .95fr}}
+.etiqueta{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--ac);background:var(--acBg);border:1px solid rgba(214,176,74,.3);border-radius:999px;padding:5px 12px;letter-spacing:.02em}
+.etiqueta .punto{width:7px;height:7px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 0 rgba(214,176,74,.6);animation:latido 2.4s infinite}
+@keyframes latido{0%{box-shadow:0 0 0 0 rgba(214,176,74,.55)}70%{box-shadow:0 0 0 9px rgba(214,176,74,0)}100%{box-shadow:0 0 0 0 rgba(214,176,74,0)}}
+h1{font-size:clamp(34px,6vw,60px);line-height:1.05;letter-spacing:-.03em;margin:20px 0 18px;font-weight:750}
+h1 .dorado{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.entradilla{font-size:clamp(17px,2.2vw,19px);color:var(--mu);max-width:560px;margin:0 0 30px}
+.acciones{display:flex;flex-wrap:wrap;gap:12px}
+
+/* Esquema de flujo */
+.flujo{background:linear-gradient(180deg,var(--s1),rgba(27,30,37,.6));border:1px solid var(--li);border-radius:22px;padding:22px;box-shadow:0 30px 80px -30px rgba(0,0,0,.6)}
+.flujo .cabecera-flujo{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--mu);margin-bottom:14px}
+.flujo .cabecera-flujo .estado{color:#8FD19E;display:flex;align-items:center;gap:6px}
+.flujo .cabecera-flujo .estado::before{content:"";width:7px;height:7px;border-radius:50%;background:#8FD19E}
+.flujo svg text{font-family:var(--sans)}
+.linea{stroke:var(--li2);stroke-width:2;fill:none}
+.pulso{stroke:var(--ac);stroke-width:2.4;fill:none;stroke-dasharray:10 190;animation:corre 3.2s linear infinite}
+.pulso.p2{animation-delay:.8s}.pulso.p3{animation-delay:1.6s}.pulso.p4{animation-delay:2.4s}
+@keyframes corre{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.pulso,.etiqueta .punto{animation:none}.pulso{stroke-dasharray:none;opacity:.5}html{scroll-behavior:auto}}
+
+/* Secciones */
+section{padding:72px 0}
+@media (min-width:960px){section{padding:96px 0}}
+.titulo-seccion{max-width:680px;margin-bottom:40px}
+.titulo-seccion .mini{font-family:var(--mono);font-size:12.5px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase}
+h2{font-size:clamp(28px,4vw,40px);line-height:1.12;letter-spacing:-.02em;margin:10px 0 12px;font-weight:720}
+.titulo-seccion p{color:var(--mu);margin:0;font-size:17px}
+
+.tarjetas{display:grid;gap:16px}
+@media (min-width:640px){.tarjetas{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:980px){.tarjetas{grid-template-columns:repeat(3,1fr)}}
+.tarjeta{background:var(--s1);border:1px solid var(--li);border-radius:var(--radio);padding:24px;transition:border-color .2s ease, transform .2s ease}
+.tarjeta:hover{border-color:rgba(214,176,74,.5);transform:translateY(-2px)}
+.icono{width:44px;height:44px;border-radius:12px;background:var(--acBg);border:1px solid rgba(214,176,74,.3);display:grid;place-items:center;margin-bottom:16px;color:var(--ac)}
+.icono svg{width:22px;height:22px}
+.tarjeta h3{margin:0 0 8px;font-size:18px;letter-spacing:-.01em}
+.tarjeta p{margin:0;color:var(--mu);font-size:15.5px}
+
+/* Pasos */
+.pasos{display:grid;gap:16px;counter-reset:paso}
+@media (min-width:820px){.pasos{grid-template-columns:repeat(4,1fr)}}
+.paso{position:relative;padding:24px;border-radius:var(--radio);background:linear-gradient(180deg,var(--s1),transparent);border:1px solid var(--li)}
+.paso::before{counter-increment:paso;content:"0" counter(paso);font-family:var(--mono);font-size:13px;color:var(--ac);display:block;margin-bottom:14px}
+.paso h3{margin:0 0 6px;font-size:17px}
+.paso p{margin:0;color:var(--mu);font-size:15px}
+
+/* Caso */
+.caso{display:grid;gap:32px;align-items:center;background:var(--s1);border:1px solid var(--li);border-radius:24px;padding:28px}
+@media (min-width:960px){.caso{grid-template-columns:1fr 1fr;padding:48px;gap:56px}}
+.caso h2{margin-top:6px}
+.caso p{color:var(--mu)}
+.lista{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
+.lista li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px}
+.lista li::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--acBg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D6B04A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/11px no-repeat;border:1px solid rgba(214,176,74,.4)}
+
+/* Chat de ejemplo */
+.chat{background:var(--bg);border:1px solid var(--li);border-radius:20px;padding:18px;display:grid;gap:10px;font-size:14.5px}
+.chat .quien{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--li);margin-bottom:4px}
+.chat .avatar{width:34px;height:34px;border-radius:50%;background:var(--acBg);border:1px solid rgba(214,176,74,.4);display:grid;place-items:center;color:var(--ac);font-weight:700;font-size:13px}
+.chat .quien small{display:block;color:var(--mu);font-size:12px}
+.burbuja{max-width:85%;padding:10px 14px;border-radius:16px;line-height:1.45}
+.burbuja.cliente{justify-self:end;background:var(--s2);border-bottom-right-radius:5px}
+.burbuja.ia{justify-self:start;background:var(--acBg);border:1px solid rgba(214,176,74,.25);border-bottom-left-radius:5px}
+.chat .sistema{justify-self:center;font-family:var(--mono);font-size:11.5px;color:var(--mu);background:var(--s1);border:1px solid var(--li);border-radius:999px;padding:4px 12px}
+
+/* Principios */
+.principios{display:grid;gap:16px}
+@media (min-width:820px){.principios{grid-template-columns:repeat(3,1fr)}}
+.principio{padding:4px 0 0;border-top:1px solid var(--li)}
+.principio h3{font-size:17px;margin:18px 0 6px}
+.principio p{margin:0;color:var(--mu);font-size:15.5px}
+
+/* Contacto */
+.contacto{text-align:center;border:1px solid rgba(214,176,74,.35);border-radius:28px;padding:48px 20px;background:radial-gradient(500px 240px at 50% 0%,rgba(214,176,74,.14),transparent 70%),var(--s1)}
+.contacto h2{margin-top:0}
+.contacto p{color:var(--mu);max-width:560px;margin:0 auto 26px;font-size:17px}
+.correo{font-family:var(--mono);font-size:15px;color:var(--mu);margin-top:16px}
+
+footer{border-top:1px solid var(--li);padding:28px 0 40px;color:var(--mu);font-size:14px}
+footer .fila{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
+footer a{color:var(--mu);text-decoration:none}
+footer a:hover{color:var(--tx)}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="fondo" aria-hidden="true"></div>
+
+<header>
+  <div class="contenedor barra">
+    <a class="marca" href="#inicio" aria-label="GZLab, inicio"><span class="logo">GZ</span><span>GZ<b>Lab</b></span></a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#que-hacemos">Qué hacemos</a></li>
+        <li><a href="#como">Cómo trabajamos</a></li>
+        <li><a href="#caso">Un caso real</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+    <a class="boton secundario" href="mailto:gzlab026@gmail.com">Escríbenos</a>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- PORTADA -->
+  <div class="portada">
+    <div class="contenedor rejilla">
+      <div>
+        <span class="etiqueta"><span class="punto"></span>Automatización · Inteligencia artificial</span>
+        <h1>Procesos que <span class="dorado">trabajan solos</span>, con inteligencia artificial.</h1>
+        <p class="entradilla">En GZLab automatizamos las tareas repetitivas de los negocios: atender a los clientes, gestionar reservas, avisar a tiempo y conectar las herramientas que ya usas. Funciona las 24 horas y tú te centras en lo importante.</p>
+        <div class="acciones">
+          <a class="boton primario" href="#que-hacemos">Ver qué hacemos</a>
+          <a class="boton secundario" href="#caso">Un caso real</a>
+        </div>
+      </div>
+
+      <div class="flujo" role="img" aria-label="Esquema de una automatización: un mensaje de WhatsApp o una llamada llega a la IA, que consulta la agenda, reserva la cita y avisa al dueño en el móvil.">
+        <div class="cabecera-flujo"><span>flujo · nueva reserva</span><span class="estado">activo</span></div>
+        <svg viewBox="0 0 440 300" aria-hidden="true">
+          <!-- líneas -->
+          <path class="linea" d="M110 70 C 160 70, 160 150, 200 150"/>
+          <path class="linea" d="M110 230 C 160 230, 160 150, 200 150"/>
+          <path class="linea" d="M280 150 C 310 150, 310 70, 330 70"/>
+          <path class="linea" d="M280 150 C 310 150, 310 230, 330 230"/>
+          <path class="pulso" d="M110 70 C 160 70, 160 150, 200 150"/>
+          <path class="pulso p2" d="M110 230 C 160 230, 160 150, 200 150"/>
+          <path class="pulso p3" d="M280 150 C 310 150, 310 70, 330 70"/>
+          <path class="pulso p4" d="M280 150 C 310 150, 310 230, 330 230"/>
+          <!-- nodos de entrada -->
+          <g><rect x="14" y="44" width="96" height="52" rx="12" fill="#1B1E25" stroke="#454B59"/>
+            <text x="62" y="66" text-anchor="middle" fill="#F4EFE4" font-size="13" font-weight="600">WhatsApp</text>
+            <text x="62" y="83" text-anchor="middle" fill="#B9B2A4" font-size="11">mensaje</text></g>
+          <g><rect x="14" y="204" width="96" height="52" rx="12" fill="#1B1E25" stroke="#454B59"/>
+            <text x="62" y="226" text-anchor="middle" fill="#F4EFE4" font-size="13" font-weight="600">Teléfono</text>
+            <text x="62" y="243" text-anchor="middle" fill="#B9B2A4" font-size="11">llamada</text></g>
+          <!-- nodo IA -->
+          <g><rect x="200" y="112" width="80" height="76" rx="18" fill="rgba(214,176,74,.12)" stroke="#D6B04A"/>
+            <text x="240" y="146" text-anchor="middle" fill="#D6B04A" font-size="18" font-weight="800">IA</text>
+            <text x="240" y="166" text-anchor="middle" fill="#B9B2A4" font-size="11">entiende y decide</text></g>
+          <!-- nodos de salida -->
+          <g><rect x="330" y="44" width="96" height="52" rx="12" fill="#1B1E25" stroke="#454B59"/>
+            <text x="378" y="66" text-anchor="middle" fill="#F4EFE4" font-size="13" font-weight="600">Agenda</text>
+            <text x="378" y="83" text-anchor="middle" fill="#B9B2A4" font-size="11">cita reservada</text></g>
+          <g><rect x="330" y="204" width="96" height="52" rx="12" fill="#1B1E25" stroke="#454B59"/>
+            <text x="378" y="226" text-anchor="middle" fill="#F4EFE4" font-size="13" font-weight="600">Aviso</text>
+            <text x="378" y="243" text-anchor="middle" fill="#B9B2A4" font-size="11">al móvil del dueño</text></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUÉ HACEMOS -->
+  <section id="que-hacemos">
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <span class="mini">Qué hacemos</span>
+        <h2>La IA se encarga de lo repetitivo. Tú, del negocio.</h2>
+        <p>Diseñamos automatizaciones a medida que unen inteligencia artificial y las herramientas de cada día.</p>
+      </div>
+      <div class="tarjetas">
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div>
+          <h3>Atención al cliente con IA</h3>
+          <p>Una recepcionista virtual que contesta por WhatsApp y por teléfono, con voz natural, en varios idiomas y a cualquier hora.</p>
+        </article>
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></div>
+          <h3>Reservas y agenda</h3>
+          <p>Consulta los huecos libres, reserva, cambia y cancela citas según tus horarios y reglas, sin dobles reservas.</p>
+        </article>
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+          <h3>Avisos y recordatorios</h3>
+          <p>Notificaciones al móvil cuando pasa algo importante y recordatorios automáticos para que nadie se olvide de su cita.</p>
+        </article>
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h4a4 4 0 0 1 4 4v5M15 18h-4a4 4 0 0 1-4-4V9"/></svg></div>
+          <h3>Conexión entre herramientas</h3>
+          <p>Hacemos que hablen entre sí el correo, las hojas de cálculo, los calendarios, la mensajería y el resto de tus programas.</p>
+        </article>
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+          <h3>Informes automáticos</h3>
+          <p>Resúmenes diarios o semanales con lo que ha pasado: clientes, citas, incidencias y costes, sin tener que buscarlo.</p>
+        </article>
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2H22l-6 4.5 2.3 7.3L12 16.5 5.7 21l2.3-7.3-6-4.5h7.6z"/></svg></div>
+          <h3>Procesos a medida</h3>
+          <p>Si una tarea se repite cada día, casi siempre se puede automatizar. Estudiamos tu caso y buscamos la forma más sencilla.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO TRABAJAMOS -->
+  <section id="como">
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <span class="mini">Cómo trabajamos</span>
+        <h2>De la idea a un proceso que funciona solo.</h2>
+        <p>Sin complicaciones técnicas para ti: nosotros nos ocupamos de todo.</p>
+      </div>
+      <div class="pasos">
+        <div class="paso"><h3>Escuchamos</h3><p>Nos cuentas cómo trabajas y qué tareas te quitan más tiempo.</p></div>
+        <div class="paso"><h3>Diseñamos</h3><p>Proponemos la automatización más sencilla que resuelva el problema de verdad.</p></div>
+        <div class="paso"><h3>Probamos</h3><p>La ponemos a prueba con casos reales antes de que la use ningún cliente.</p></div>
+        <div class="paso"><h3>Funciona sola</h3><p>Queda en marcha las 24 horas, con avisos si algo falla y copias de seguridad diarias.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO REAL -->
+  <section id="caso">
+    <div class="contenedor">
+      <div class="caso">
+        <div>
+          <span class="mini" style="font-family:var(--mono);font-size:12.5px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase">Un caso real</span>
+          <h2>Una recepcionista virtual para barberías</h2>
+          <p>Las barberías pierden clientes cuando no pueden coger el teléfono con las manos ocupadas. Por eso creamos a Claudia: atiende por WhatsApp y por teléfono como lo haría alguien en el mostrador.</p>
+          <ul class="lista">
+            <li>Conoce los servicios, precios, horarios y días de cierre.</li>
+            <li>Ofrece las horas libres y reserva, cambia o cancela la cita.</li>
+            <li>Reconoce a los clientes habituales y les saluda por su nombre.</li>
+            <li>Avisa al dueño en el móvil de cada reserva o recado.</li>
+            <li>El dueño lo controla todo desde una app sencilla: agenda, clientes y ajustes.</li>
+          </ul>
+        </div>
+        <div class="chat" aria-label="Ejemplo de conversación por WhatsApp">
+          <div class="quien"><span class="avatar">C</span><div><strong>Claudia</strong><small>recepcionista virtual</small></div></div>
+          <div class="burbuja cliente">Hola, ¿tenéis hueco mañana por la tarde para un corte?</div>
+          <div class="burbuja ia">¡Hola! Mañana por la tarde tengo a las 16:00, a las 17:00 o a las 18:30. ¿Cuál te viene mejor?</div>
+          <div class="burbuja cliente">A las 17:00</div>
+          <div class="burbuja ia">Hecho, te apunto mañana a las 17:00 un corte. ¡Nos vemos!</div>
+          <div class="sistema">aviso enviado al móvil del dueño</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPIOS -->
+  <section>
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <span class="mini">Cómo lo hacemos</span>
+        <h2>Tecnología seria, explicada en sencillo.</h2>
+      </div>
+      <div class="principios">
+        <div class="principio"><h3>Privacidad primero</h3><p>Los datos de tus clientes se guardan en servidores en Europa y solo se usan para lo que tienen que hacer.</p></div>
+        <div class="principio"><h3>Siempre vigilado</h3><p>Pruebas automáticas, avisos ante cualquier error y copias de seguridad cada día.</p></div>
+        <div class="principio"><h3>Hecho a tu medida</h3><p>Nada de plantillas genéricas: la automatización se adapta a tu forma de trabajar, no al revés.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="contenedor">
+      <div class="contacto">
+        <h2>¿Hay alguna tarea que repites cada día?</h2>
+        <p>Cuéntanosla. Te diremos si se puede automatizar y cómo.</p>
+        <a class="boton primario" href="mailto:gzlab026@gmail.com">Escríbenos un correo</a>
+        <div class="correo">gzlab026@gmail.com</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor fila">
+    <span>© 2026 GZLab · Automatización de procesos con IA</span>
+    <a href="privacidad.html">Privacidad</a>
+  </div>
+</footer>
+</body>
+</html>
