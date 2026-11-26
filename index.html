@@ -3,14 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GZLab · Automatización de procesos con IA</title>
-<meta name="description" content="GZLab automatiza procesos con inteligencia artificial: atención al cliente por WhatsApp y teléfono, reservas, avisos y conexión entre herramientas.">
+<title>GZLab · Todo tu negocio, funcionando solo</title>
+<meta name="description" content="Automatizamos el día a día de tu negocio con inteligencia artificial: atención por WhatsApp y teléfono, agenda, clientes, avisos y tus números, conectados y adaptados a tu forma de trabajar.">
 <meta name="theme-color" content="#14161B">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314161B'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='28' font-weight='700' fill='%23D6B04A' text-anchor='middle'%3EGZ%3C/text%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#14161B; --s1:#1B1E25; --s2:#232730; --li:#2F3440; --li2:#454B59;
-  --tx:#F4EFE4; --mu:#B9B2A4; --ac:#D6B04A; --ac2:#F0D27A; --acBg:rgba(214,176,74,.10);
+  --tx:#F4EFE4; --mu:#B9B2A4; --ac:#D6B04A; --ac2:#F0D27A; --acBg:rgba(214,176,74,.10); --acLi:rgba(214,176,74,.45);
+  --pu:#A58BFF; --pu2:#C9B8FF; --puBg:rgba(165,139,255,.12); --puLi:rgba(165,139,255,.5);
+  --ok:#8FD19E; --da:#F08A7E; --tel:#0E0F12;
   --radio:16px; --ancho:1120px;
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
@@ -23,11 +25,12 @@ img,svg{max-width:100%;display:block}
 .contenedor{width:100%;max-width:var(--ancho);margin:0 auto;padding:0 16px}
 @media (min-width:720px){.contenedor{padding:0 32px}}
 
-/* Fondo: cuadrícula suave y brillo dorado */
+/* Fondo: cuadrícula suave, brillo dorado y púrpura */
 .fondo{position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
     radial-gradient(600px 400px at 85% -5%, rgba(214,176,74,.14), transparent 70%),
-    radial-gradient(500px 380px at -10% 35%, rgba(214,176,74,.06), transparent 70%),
+    radial-gradient(520px 400px at -10% 30%, rgba(165,139,255,.10), transparent 70%),
+    radial-gradient(500px 380px at 110% 75%, rgba(165,139,255,.06), transparent 70%),
     linear-gradient(var(--bg),var(--bg));}
 .fondo::after{content:"";position:absolute;inset:0;
   background-image:linear-gradient(rgba(244,239,228,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(244,239,228,.035) 1px,transparent 1px);
@@ -38,43 +41,57 @@ img,svg{max-width:100%;display:block}
 header{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:rgba(20,22,27,.72);border-bottom:1px solid rgba(47,52,64,.6)}
 .barra{display:flex;align-items:center;justify-content:space-between;height:64px}
 .marca{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-.01em}
-.marca .logo{width:34px;height:34px;border-radius:9px;background:var(--acBg);border:1px solid rgba(214,176,74,.45);display:grid;place-items:center;color:var(--ac);font-size:14px;font-weight:800;letter-spacing:.02em}
+.marca .logo{width:34px;height:34px;border-radius:9px;background:var(--acBg);border:1px solid var(--acLi);display:grid;place-items:center;color:var(--ac);font-size:14px;font-weight:800;letter-spacing:.02em}
 .marca span b{color:var(--ac)}
-nav ul{display:none;list-style:none;margin:0;padding:0;gap:28px}
-nav a{text-decoration:none;color:var(--mu);font-size:15px}
+nav ul{display:none;list-style:none;margin:0;padding:0;gap:22px}
+nav a{text-decoration:none;color:var(--mu);font-size:14.5px}
 nav a:hover{color:var(--tx)}
-@media (min-width:820px){nav ul{display:flex}}
+@media (min-width:1000px){nav ul{display:flex}}
 .boton{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:15px;border-radius:999px;padding:11px 20px;transition:transform .15s ease, background .15s ease, border-color .15s ease}
 .boton:hover{transform:translateY(-1px)}
+button.boton{font-family:inherit;cursor:pointer;background:none;color:var(--tx)}
 .boton.primario{background:var(--ac);color:#14161B}
 .boton.primario:hover{background:var(--ac2)}
 .boton.secundario{border:1px solid var(--li2);color:var(--tx)}
-.boton.secundario:hover{border-color:var(--ac)}
+.boton.secundario:hover{border-color:var(--pu)}
 .barra .boton{padding:8px 16px;font-size:14px}
 
 /* Portada */
 .portada{padding:64px 0 40px}
 .portada .rejilla{display:grid;gap:48px;align-items:center}
-@media (min-width:960px){.portada{padding:96px 0 72px}.portada .rejilla{grid-template-columns:1.05fr .95fr}}
+@media (min-width:960px){.portada{padding:96px 0 72px}.portada .rejilla{grid-template-columns:1fr 1fr}}
 .etiqueta{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--ac);background:var(--acBg);border:1px solid rgba(214,176,74,.3);border-radius:999px;padding:5px 12px;letter-spacing:.02em}
-.etiqueta .punto{width:7px;height:7px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 0 rgba(214,176,74,.6);animation:latido 2.4s infinite}
-@keyframes latido{0%{box-shadow:0 0 0 0 rgba(214,176,74,.55)}70%{box-shadow:0 0 0 9px rgba(214,176,74,0)}100%{box-shadow:0 0 0 0 rgba(214,176,74,0)}}
+.etiqueta .punto{width:7px;height:7px;border-radius:50%;background:var(--pu);animation:latido 2.4s infinite}
+@keyframes latido{0%{box-shadow:0 0 0 0 rgba(165,139,255,.6)}70%{box-shadow:0 0 0 9px rgba(165,139,255,0)}100%{box-shadow:0 0 0 0 rgba(165,139,255,0)}}
 h1{font-size:clamp(34px,6vw,60px);line-height:1.05;letter-spacing:-.03em;margin:20px 0 18px;font-weight:750}
 h1 .dorado{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .entradilla{font-size:clamp(17px,2.2vw,19px);color:var(--mu);max-width:560px;margin:0 0 30px}
+.entradilla strong{color:var(--tx);font-weight:600}
 .acciones{display:flex;flex-wrap:wrap;gap:12px}
 
-/* Esquema de flujo */
-.flujo{background:linear-gradient(180deg,var(--s1),rgba(27,30,37,.6));border:1px solid var(--li);border-radius:22px;padding:22px;box-shadow:0 30px 80px -30px rgba(0,0,0,.6)}
-.flujo .cabecera-flujo{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--mu);margin-bottom:14px}
-.flujo .cabecera-flujo .estado{color:#8FD19E;display:flex;align-items:center;gap:6px}
-.flujo .cabecera-flujo .estado::before{content:"";width:7px;height:7px;border-radius:50%;background:#8FD19E}
-.flujo svg text{font-family:var(--sans)}
-.linea{stroke:var(--li2);stroke-width:2;fill:none}
-.pulso{stroke:var(--ac);stroke-width:2.4;fill:none;stroke-dasharray:10 190;animation:corre 3.2s linear infinite}
-.pulso.p2{animation-delay:.8s}.pulso.p3{animation-delay:1.6s}.pulso.p4{animation-delay:2.4s}
+/* Esquema: entra → IA → sale */
+.flujo{background:linear-gradient(180deg,var(--s1),rgba(27,30,37,.6));border:1px solid var(--li);border-radius:22px;padding:18px 16px 16px;box-shadow:0 30px 80px -30px rgba(0,0,0,.6)}
+.cab-flujo{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--mu);margin-bottom:16px}
+.cab-flujo .estado{color:var(--ok);display:flex;align-items:center;gap:6px}
+.cab-flujo .estado::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.esquema{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:0 26px;align-items:center}
+@media (min-width:520px){.esquema{gap:0 40px}}
+.esquema svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.col{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.nodo{padding:9px 11px;border-radius:12px;border:1px solid var(--li2);background:var(--s1);display:flex;flex-direction:column;gap:2px}
+.nodo .t{font-size:13.5px;font-weight:650;line-height:1.2}
+.nodo .e{font-size:11px;color:var(--mu);line-height:1.25}
+.col.sale .nodo{border-color:var(--acLi);background:linear-gradient(180deg,var(--acBg),var(--s1))}
+.ia{position:relative;z-index:1;width:clamp(72px,11vw,96px);aspect-ratio:1/1.05;border-radius:20px;border:1px solid var(--pu);background:radial-gradient(circle at 50% 35%,var(--puBg),transparent 75%),var(--s1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;box-shadow:0 0 0 6px var(--puBg),0 0 40px -6px var(--puLi);animation:respira 3.2s ease-in-out infinite}
+.ia b{font-size:20px;color:var(--pu);font-weight:800}
+.ia span{font-family:var(--mono);font-size:10px;color:var(--mu);line-height:1.3}
+@keyframes respira{50%{box-shadow:0 0 0 9px var(--puBg),0 0 56px -4px var(--puLi)}}
+.linea{fill:none;stroke:var(--li2);stroke-width:1.6;opacity:.9}
+.pulso{fill:none;stroke:var(--pu);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:12 188;animation:corre 2.8s linear infinite;filter:drop-shadow(0 0 4px var(--pu))}
 @keyframes corre{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
-@media (prefers-reduced-motion:reduce){.pulso,.etiqueta .punto{animation:none}.pulso{stroke-dasharray:none;opacity:.5}html{scroll-behavior:auto}}
+.pie-flujo{margin-top:16px;padding-top:12px;border-top:1px dashed var(--li2);font-family:var(--mono);font-size:11.5px;color:var(--mu);text-align:center}
+.pie-flujo b{color:var(--pu);font-weight:600}
+@media (max-width:420px){.nodo{padding:7px 8px}.nodo .t{font-size:12.5px}.nodo .e{font-size:10.5px}}
 
 /* Secciones */
 section{padding:72px 0}
@@ -82,44 +99,257 @@ section{padding:72px 0}
 .titulo-seccion{max-width:680px;margin-bottom:40px}
 .titulo-seccion .mini{font-family:var(--mono);font-size:12.5px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase}
 h2{font-size:clamp(28px,4vw,40px);line-height:1.12;letter-spacing:-.02em;margin:10px 0 12px;font-weight:720}
+h2 .morado{color:var(--pu)}
 .titulo-seccion p{color:var(--mu);margin:0;font-size:17px}
+#servicios .titulo-seccion{max-width:900px}
 
-.tarjetas{display:grid;gap:16px}
-@media (min-width:640px){.tarjetas{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:980px){.tarjetas{grid-template-columns:repeat(3,1fr)}}
-.tarjeta{background:var(--s1);border:1px solid var(--li);border-radius:var(--radio);padding:24px;transition:border-color .2s ease, transform .2s ease}
-.tarjeta:hover{border-color:rgba(214,176,74,.5);transform:translateY(-2px)}
-.icono{width:44px;height:44px;border-radius:12px;background:var(--acBg);border:1px solid rgba(214,176,74,.3);display:grid;place-items:center;margin-bottom:16px;color:var(--ac)}
-.icono svg{width:22px;height:22px}
-.tarjeta h3{margin:0 0 8px;font-size:18px;letter-spacing:-.01em}
-.tarjeta p{margin:0;color:var(--mu);font-size:15.5px}
+/* Servicios: bloques + teléfono */
+.servicios{display:grid;gap:28px;align-items:start}
+@media (min-width:980px){.servicios{grid-template-columns:minmax(0,1fr) 330px;gap:40px}}
+.bloques{display:grid;gap:16px}
+@media (min-width:680px){.bloques{grid-template-columns:repeat(2,1fr)}}
+.bloque{background:var(--s1);border:1px solid var(--li);border-radius:20px;padding:24px;transition:border-color .2s ease, box-shadow .2s ease}
+.bloque.visto{border-color:var(--acLi);box-shadow:0 10px 30px -18px rgba(214,176,74,.5)}
+.bloque.medida{grid-column:1/-1;border-style:dashed;border-color:var(--puLi);background:radial-gradient(420px 160px at 0% 0%,var(--puBg),transparent 70%),var(--s1)}
+.bloque.medida.visto{border-style:solid;border-color:var(--pu);box-shadow:0 10px 30px -18px var(--puLi)}
+.bloque .cab{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.icono{width:42px;height:42px;border-radius:12px;background:var(--acBg);border:1px solid rgba(214,176,74,.3);display:grid;place-items:center;color:var(--ac);flex:none}
+.icono svg{width:21px;height:21px}
+.medida .icono{background:var(--puBg);border-color:var(--puLi);color:var(--pu)}
+.bloque .nombre{font-family:var(--mono);font-size:12.5px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase}
+.medida .nombre{color:var(--pu)}
+.bloque h3{margin:0 0 8px;font-size:21px;letter-spacing:-.015em}
+.bloque p{margin:0 0 16px;color:var(--mu);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13.5px;color:var(--tx);padding:6px 12px;border-radius:999px;background:var(--s2);border:1px solid var(--li);cursor:pointer;transition:border-color .15s, background .15s, color .15s}
+.chip:hover{border-color:var(--acLi)}
+.chip.visto{border-color:var(--ac);background:var(--acBg);color:var(--ac2)}
+.medida .chip:hover{border-color:var(--puLi)}
+.medida .chip.visto{border-color:var(--pu);background:var(--puBg);color:var(--pu2)}
+.toca{margin:14px 0 0;font-family:var(--mono);font-size:12px;color:var(--mu)}
+
+/* Teléfono de muestra */
+.muestra{display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--s1);border:1px solid var(--li);border-radius:24px;padding:16px 0 22px;scroll-margin-top:80px}
+@media (min-width:980px){.muestra{position:sticky;top:84px}}
+.cab-card{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:12px;color:var(--mu);padding:0 18px}
+.cab-card .vivo{color:var(--ok);display:flex;align-items:center;gap:6px}
+.cab-card .vivo::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.vista{display:none;width:100%;flex-direction:column;align-items:center;gap:14px}
+.vista.activa{display:flex}
+.vista .que{width:100%;padding:0 18px}
+.vista .que h3{margin:0 0 4px;font-size:19px;letter-spacing:-.015em}
+.vista .que p{margin:0;font-size:14px;line-height:1.5;color:var(--mu)}
+.telefono{width:280px;max-width:calc(100% - 32px);height:540px;border-radius:40px;background:var(--tel);padding:11px;box-shadow:0 0 0 1px var(--li2),0 24px 60px -20px rgba(0,0,0,.6);flex:none}
+.pantalla{width:100%;height:100%;border-radius:30px;overflow:hidden;background:#ECE5DD;color:#111;display:flex;flex-direction:column;font-size:13px;position:relative}
+.barra-tel{display:flex;justify-content:space-between;padding:10px 18px 6px;font-size:12px;font-weight:600}
+.p-oscura,.p-app{background:#14161B;color:#F4EFE4}
+.cab-wa{background:#075E54;color:#fff;padding:8px 12px 10px;display:flex;align-items:center;gap:10px}
+.cab-wa .av{width:34px;height:34px;border-radius:17px;background:#D6B04A;color:#14161B;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.cab-wa small{display:block;font-size:11px;opacity:.85}
+.chat{flex:1;padding:10px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.b{max-width:82%;padding:7px 10px 4px;border-radius:10px;line-height:1.35;box-shadow:0 1px 1px rgba(0,0,0,.12);opacity:0;transform:translateY(6px);animation:sale .35s forwards}
+.b i{display:block;font-style:normal;font-size:10px;color:#667;text-align:right;margin-top:2px}
+.b.yo{align-self:flex-end;background:#DCF8C6}
+.b.el{align-self:flex-start;background:#fff}
+.b.sis{align-self:center;background:#FFF5C4;font-size:11px;text-align:center}
+@keyframes sale{to{opacity:1;transform:none}}
+.ap-cab{padding:6px 16px 10px}
+.ap-cab small{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#B9B2A4;font-weight:600}
+.ap-cab b{display:block;font-size:22px;letter-spacing:-.02em}
+.ap-cab .sub{display:block;font-size:12px;color:#B9B2A4}
+.ap-lista{padding:0 12px;display:flex;flex-direction:column;gap:7px}
+.ap-cita{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:12px;background:#1E2128;border:1px solid #343946;opacity:0;animation:sale .35s forwards}
+.ap-cita .h{width:40px;font-weight:700;font-variant-numeric:tabular-nums;flex:none}
+.ap-cita .n{flex:1;min-width:0}
+.ap-cita .n span{display:block;font-size:11px;color:#B9B2A4}
+.ap-cita .c{font-size:10px;font-weight:700;padding:3px 7px;border-radius:999px;background:#3A3420;color:#D6B04A;flex:none}
+.ap-cita .c.rojo{background:#3A2020;color:#F08A7E}
+.ap-cita .c.gris{background:#2A2E37;color:#B9B2A4}
+.ap-cita .c.morado{background:#2B2540;color:#C9B8FF}
+.ap-cita.libre{background:transparent;border-style:dashed;color:#B9B2A4}
+.ap-nav{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 6px 12px;border-top:1px solid #343946;font-size:10px;color:#B9B2A4;text-align:center}
+.ap-nav .on{color:#D6B04A;font-weight:700}
+.nota-tel{padding:14px 16px;font-size:12px;color:#B9B2A4;line-height:1.45}
+.llamada{flex:1;display:flex;flex-direction:column;align-items:center;padding:22px 16px;gap:10px;text-align:center}
+.llamada .av{width:74px;height:74px;border-radius:37px;background:#2B2540;border:1px solid #A58BFF;color:#C9B8FF;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800}
+.llamada .tit{font-size:17px;font-weight:700}
+.llamada .info{font-size:12px;color:#B9B2A4}
+.onda{display:flex;gap:4px;align-items:center;height:34px}
+.onda span{width:5px;border-radius:3px;background:#A58BFF;animation:onda 1s ease-in-out infinite}
+.onda span:nth-child(2){animation-delay:.15s}.onda span:nth-child(3){animation-delay:.3s}.onda span:nth-child(4){animation-delay:.45s}.onda span:nth-child(5){animation-delay:.6s}
+@keyframes onda{0%,100%{height:8px}50%{height:30px}}
+.dicho{width:100%;display:flex;flex-direction:column;gap:6px;text-align:left}
+.dicho p{margin:0;padding:7px 10px;border-radius:10px;background:#1E2128;font-size:12px;line-height:1.35;opacity:0;animation:sale .35s forwards}
+.dicho p b{color:#D6B04A}
+.dicho p.ok{background:#1F2B22;color:#8FD19E}
+.bloqueo{flex:1;background:linear-gradient(160deg,#2A2E37,#14161B);color:#fff;display:flex;flex-direction:column;align-items:center;padding:30px 12px;gap:8px}
+.bloqueo .reloj{font-size:56px;font-weight:300;letter-spacing:-.02em}
+.bloqueo .fecha{font-size:14px;opacity:.85;margin-bottom:14px}
+.noti{width:100%;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.14);display:flex;gap:10px;opacity:0;animation:sale .4s forwards;text-align:left}
+.noti .ic{width:30px;height:30px;border-radius:8px;background:#D6B04A;color:#14161B;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.noti b{display:block;font-size:12px}
+.noti span{display:block;font-size:12px;line-height:1.35;opacity:.92}
+.noti small{font-size:10px;opacity:.7}
+.semana{padding:0 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.semana div{padding:8px 6px;border-radius:10px;background:#1E2128;border:1px solid #343946;display:flex;flex-direction:column;gap:5px;min-height:150px}
+.semana .d{font-size:11px;font-weight:700;color:#B9B2A4}
+.semana .e{font-size:10px;padding:4px 5px;border-radius:6px;background:#2A2E37;line-height:1.3}
+.semana .e.f{background:#3A3420;color:#D6B04A;font-weight:700;opacity:0;animation:sale .35s forwards}
+.ficha{padding:0 12px;display:flex;flex-direction:column;gap:7px}
+.ficha .fila{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:#1E2128;border:1px solid #343946;font-size:12px;opacity:0;animation:sale .35s forwards}
+.ficha .fila span{color:#B9B2A4;text-align:right}
+.ficha .fila span.hecho{color:#8FD19E}
+.ficha .nota-f{padding:9px 10px;border-radius:10px;background:#3A3420;color:#F0D27A;font-size:12px;line-height:1.4;opacity:0;animation:sale .35s forwards}
+.ficha .nota-f.morado{background:#2B2540;color:#C9B8FF}
+.grafico{margin:4px 12px 12px;padding:12px 10px 8px;border-radius:12px;background:#1E2128;border:1px solid #343946}
+.barras{display:flex;align-items:flex-end;gap:10px;height:110px}
+.barras i{flex:1;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#F0D27A,#D6B04A);transform-origin:bottom;transform:scaleY(0);animation:crece .6s forwards}
+.barras i.ahora{background:linear-gradient(180deg,#C9B8FF,#A58BFF)}
+@keyframes crece{to{transform:scaleY(1)}}
+.ejes{display:flex;gap:10px;margin-top:6px;font-size:10px;color:#B9B2A4;text-align:center}
+.ejes span{flex:1}
+
+/* Aparecer al bajar */
+.aparece{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.aparece.visible{opacity:1;transform:none}
+
+/* Esquema que se monta al entrar */
+.esquema .ia,.esquema .nodo{transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.esquema:not(.montado) .ia{opacity:0;transform:scale(.6)}
+.esquema:not(.montado) .entra .nodo{opacity:0;transform:translateX(-16px)}
+.esquema:not(.montado) .sale .nodo{opacity:0;transform:translateX(16px)}
+.esquema .ia{transition-delay:.1s}
+.esquema .entra .nodo:nth-child(1){transition-delay:.5s}.esquema .entra .nodo:nth-child(2){transition-delay:.6s}.esquema .entra .nodo:nth-child(3){transition-delay:.7s}.esquema .entra .nodo:nth-child(4){transition-delay:.8s}
+.esquema .sale .nodo:nth-child(1){transition-delay:1.7s}.esquema .sale .nodo:nth-child(2){transition-delay:1.8s}.esquema .sale .nodo:nth-child(3){transition-delay:1.9s}.esquema .sale .nodo:nth-child(4){transition-delay:2s}
+.esquema .linea{stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset .8s ease 1s}
+.esquema .linea.l-sale{transition-delay:1.4s}
+.esquema.montado .linea{stroke-dashoffset:0}
+.esquema .pulso{opacity:0;transition:opacity .6s ease 2.3s}
+.esquema.montado .pulso{opacity:1}
+
+/* Frase grande que se ilumina palabra a palabra */
+.frase{height:190vh;position:relative}
+.frase .pegado{position:sticky;top:0;height:100vh;display:flex;align-items:center}
+.frase h2{font-size:clamp(42px,7.4vw,96px);line-height:1.03;letter-spacing:-.035em;margin:0;max-width:1040px;font-weight:760}
+.frase .morado{color:var(--pu)}
+.palabra{opacity:.13;transition:opacity .3s linear}
+.palabra.on{opacity:1}
+#servicios{padding-top:24px}
+
+/* Tu negocio: tarjeta que cambia de negocio */
+.quien{display:grid;gap:40px;align-items:center}
+@media (min-width:960px){.quien{grid-template-columns:1fr 1fr;gap:64px}}
+.quien .titulo-seccion{margin-bottom:0}
+.adapta-et{font-family:var(--mono);font-size:12.5px;color:var(--pu);letter-spacing:.06em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.adapta-et::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pu);animation:latido 2.4s infinite}
+.reserva{background:linear-gradient(180deg,var(--s1),rgba(27,30,37,.6));border:1px solid var(--li);border-radius:22px;padding:18px 22px 20px;box-shadow:0 30px 80px -30px rgba(0,0,0,.6),0 0 0 1px rgba(165,139,255,.08)}
+.ejemplos{list-style:none;margin:0;padding:0;position:relative;height:168px}
+@media (max-width:520px){.ejemplos{height:200px}}
+.ejemplo{position:absolute;inset:0;display:flex;flex-direction:column;gap:6px;opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.ejemplo.activo{opacity:1;transform:none}
+.ejemplo .negocio{font-family:var(--mono);font-size:12px;color:var(--pu2);text-transform:uppercase;letter-spacing:.08em}
+.ejemplo b{font-size:clamp(24px,3vw,30px);letter-spacing:-.02em;line-height:1.15}
+.ejemplo .det{color:var(--mu);font-size:15.5px}
+.ejemplo .via{align-self:flex-start;margin-top:4px;font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--acBg);border:1px solid rgba(214,176,74,.3);color:var(--ac)}
+.ejemplo .via.morado{background:var(--puBg);border-color:var(--puLi);color:var(--pu2)}
+.puntos{display:flex;gap:6px;margin-top:12px}
+.puntos i{width:18px;height:3px;border-radius:2px;background:var(--li2);transition:background .3s,width .3s}
+.puntos i.activo{background:var(--pu);width:30px}
+
+/* Método: los pasos se encienden al bajar */
+.carril{height:2px;border-radius:2px;background:var(--li);margin-bottom:18px;overflow:hidden}
+.carril i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pu),var(--pu2));box-shadow:0 0 10px var(--pu)}
+.paso{opacity:.35;transition:opacity .5s ease,border-color .5s ease}
+.paso.encendido{opacity:1;border-color:var(--puLi)}
+
+[hidden]{display:none!important}
+
+/* Ejemplo: un día en una barbería */
+.dia{display:grid;gap:8px}
+@media (min-width:980px){.dia{grid-template-columns:minmax(0,1fr) 330px;gap:64px}.tel-dia{order:2}}
+.tel-dia{align-self:start;position:sticky;top:64px;z-index:3;display:flex;justify-content:center;padding:10px 0 18px;background:linear-gradient(var(--bg) 88%,transparent)}
+@media (min-width:980px){.tel-dia{top:max(84px,calc(50vh - 280px));background:none;padding:0}}
+.tel-dia .pantalla{display:none}
+.tel-dia .pantalla.activa{display:flex}
+@media (max-width:979px){.tel-dia .telefono{transform:scale(.6);transform-origin:top center;margin-bottom:-216px}}
+.horas{display:flex;flex-direction:column}
+.hora{min-height:58vh;display:flex;flex-direction:column;justify-content:center;opacity:.28;transition:opacity .45s ease}
+.hora.actual{opacity:1}
+.hora .cuando{font-family:var(--mono);font-size:14px;color:var(--pu);letter-spacing:.04em}
+.hora h3{font-size:clamp(24px,3.2vw,36px);line-height:1.12;letter-spacing:-.02em;margin:8px 0 10px}
+.hora p{color:var(--mu);font-size:17px;margin:0;max-width:460px}
+@media (min-width:980px){.hora{min-height:70vh}.horas{padding:10vh 0}}
+
+/* Precios */
+.planes{display:none;gap:16px;margin-top:28px}
+.planes.abierto{display:grid;animation:entra .6s cubic-bezier(.2,.7,.2,1)}
+@keyframes entra{from{opacity:0;transform:translateY(16px)}}
+@media (min-width:820px){.planes{grid-template-columns:repeat(3,1fr)}}
+.plan{background:var(--s1);border:1px solid var(--li);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.plan.destacado{border-color:var(--acLi);background:radial-gradient(360px 160px at 50% 0%,var(--acBg),transparent 70%),var(--s1)}
+.plan .tam{font-family:var(--mono);font-size:12.5px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase}
+.plan .cuanto{color:var(--mu);font-size:14.5px}
+.plan .precio{font-size:44px;font-weight:760;letter-spacing:-.03em;line-height:1.1;margin:6px 0}
+.plan .precio small{font-size:15px;color:var(--mu);font-weight:500;letter-spacing:0}
+.plan ul{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:8px}
+.plan li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.plan li::before{content:"";flex:none;width:16px;height:16px;margin-top:4px;border-radius:50%;background:var(--acBg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D6B04A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/10px no-repeat;border:1px solid rgba(214,176,74,.4)}
+.plan .como{margin-top:auto;padding-top:10px;font-family:var(--mono);font-size:12px;color:var(--pu2)}
+.nota-precios{grid-column:1/-1;color:var(--mu);font-size:14.5px;margin:6px 0 0}
+.nota-precios a{color:var(--ac)}
+
+/* Tecnología, seguida de "Cómo lo hacemos" */
+section.seguida{padding-top:0}
+@media (min-width:980px){.principios{grid-template-columns:repeat(3,1fr)}}
+
+/* Quiénes somos */
+.nosotros{max-width:820px;margin:0 auto;text-align:center}
+.nosotros .mini{font-family:var(--mono);font-size:12.5px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase}
+.nosotros h2{font-size:clamp(32px,5vw,54px);letter-spacing:-.03em;line-height:1.08}
+.nosotros h2 .morado{color:var(--pu)}
+.nosotros p{color:var(--mu);font-size:clamp(17px,2vw,19px);margin:0 auto 22px;max-width:640px}
+
+/* Preguntas frecuentes */
+.preguntas{max-width:820px;border-top:1px solid var(--li)}
+.preguntas details{border-bottom:1px solid var(--li)}
+.preguntas summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 2px;font-size:clamp(17px,2vw,19px);font-weight:600;letter-spacing:-.01em}
+.preguntas summary::-webkit-details-marker{display:none}
+.preguntas summary::after{content:"";flex:none;width:11px;height:11px;border-right:2px solid var(--pu);border-bottom:2px solid var(--pu);transform:rotate(45deg) translateY(-3px);transition:transform .25s ease}
+.preguntas details[open] summary::after{transform:rotate(-135deg) translateY(-3px)}
+.preguntas summary:hover{color:var(--ac2)}
+.preguntas p{margin:0 0 20px;color:var(--mu);font-size:16.5px;max-width:680px}
+.editando .preguntas details p{display:block}
+
+/* Cómo prefieres que te contactemos */
+.via-contacto{border:0;margin:0 0 4px;padding:0;display:grid;gap:8px}
+.via-contacto legend{font-size:14px;color:var(--mu);padding:0;margin-bottom:8px}
+.opciones{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opcion{position:relative;display:block!important}
+.opcion input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.opcion span{display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:12px;border:1px solid var(--li2);background:var(--bg);color:var(--tx);font-size:15px;font-weight:600;transition:border-color .15s,background .15s,color .15s}
+.opcion input:checked + span{border-color:var(--pu);background:var(--puBg);color:var(--pu2)}
+.opcion input:focus-visible + span{outline:2px solid var(--ac);outline-offset:2px}
+
+/* Mientras se edita (editar.js), todo visible y quieto */
+.editando .hora{opacity:1}
+.editando .tel-dia .pantalla{display:flex}
+.editando .tel-dia .telefono{height:auto;transform:none;margin:0}
+.editando .tel-dia .pantalla{height:520px;margin-bottom:12px}
+.editando .tel-dia{position:static}
+.editando .planes{display:grid}
+.editando .aparece,.editando .palabra,.editando .paso{opacity:1;transform:none}
+.editando .ejemplos{height:auto}
+.editando .ejemplo{position:static;opacity:1;transform:none;margin-bottom:18px}
+.editando .frase{height:auto}
+.editando .frase .pegado{position:static;height:auto;padding:80px 0}
 
 /* Pasos */
 .pasos{display:grid;gap:16px;counter-reset:paso}
 @media (min-width:820px){.pasos{grid-template-columns:repeat(4,1fr)}}
 .paso{position:relative;padding:24px;border-radius:var(--radio);background:linear-gradient(180deg,var(--s1),transparent);border:1px solid var(--li)}
-.paso::before{counter-increment:paso;content:"0" counter(paso);font-family:var(--mono);font-size:13px;color:var(--ac);display:block;margin-bottom:14px}
+.paso::before{counter-increment:paso;content:"0" counter(paso);font-family:var(--mono);font-size:13px;color:var(--pu);display:block;margin-bottom:14px}
 .paso h3{margin:0 0 6px;font-size:17px}
 .paso p{margin:0;color:var(--mu);font-size:15px}
-
-/* Caso */
-.caso{display:grid;gap:32px;align-items:center;background:var(--s1);border:1px solid var(--li);border-radius:24px;padding:28px}
-@media (min-width:960px){.caso{grid-template-columns:1fr 1fr;padding:48px;gap:56px}}
-.caso h2{margin-top:6px}
-.caso p{color:var(--mu)}
-.lista{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
-.lista li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px}
-.lista li::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--acBg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D6B04A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/11px no-repeat;border:1px solid rgba(214,176,74,.4)}
-
-/* Chat de ejemplo */
-.chat{background:var(--bg);border:1px solid var(--li);border-radius:20px;padding:18px;display:grid;gap:10px;font-size:14.5px}
-.chat .quien{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--li);margin-bottom:4px}
-.chat .avatar{width:34px;height:34px;border-radius:50%;background:var(--acBg);border:1px solid rgba(214,176,74,.4);display:grid;place-items:center;color:var(--ac);font-weight:700;font-size:13px}
-.chat .quien small{display:block;color:var(--mu);font-size:12px}
-.burbuja{max-width:85%;padding:10px 14px;border-radius:16px;line-height:1.45}
-.burbuja.cliente{justify-self:end;background:var(--s2);border-bottom-right-radius:5px}
-.burbuja.ia{justify-self:start;background:var(--acBg);border:1px solid rgba(214,176,74,.25);border-bottom-left-radius:5px}
-.chat .sistema{justify-self:center;font-family:var(--mono);font-size:11.5px;color:var(--mu);background:var(--s1);border:1px solid var(--li);border-radius:999px;padding:4px 12px}
 
 /* Principios */
 .principios{display:grid;gap:16px}
@@ -130,7 +360,7 @@ h2{font-size:clamp(28px,4vw,40px);line-height:1.12;letter-spacing:-.02em;margin:
 .principio p{margin:0;color:var(--mu);font-size:15.5px}
 
 /* Contacto */
-.contacto{text-align:center;border:1px solid rgba(214,176,74,.35);border-radius:28px;padding:48px 20px;background:radial-gradient(500px 240px at 50% 0%,rgba(214,176,74,.14),transparent 70%),var(--s1)}
+.contacto{text-align:center;border:1px solid rgba(214,176,74,.35);border-radius:28px;padding:48px 20px;background:radial-gradient(500px 240px at 50% 0%,rgba(214,176,74,.14),transparent 70%),radial-gradient(400px 220px at 50% 100%,rgba(165,139,255,.08),transparent 70%),var(--s1)}
 .contacto h2{margin-top:0}
 .contacto p{color:var(--mu);max-width:560px;margin:0 auto 26px;font-size:17px}
 .correo{font-family:var(--mono);font-size:15px;color:var(--mu);margin-top:16px}
@@ -140,6 +370,41 @@ footer .fila{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-bet
 footer a{color:var(--mu);text-decoration:none}
 footer a:hover{color:var(--tx)}
 :focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:6px}
+
+/* Me interesa */
+.formulario{display:grid;gap:12px;max-width:520px;margin:0 auto;text-align:left}
+@media (min-width:640px){.formulario .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}}
+.formulario .dos{display:grid;gap:12px}
+.formulario label{display:grid;gap:6px;font-size:14px;color:var(--mu)}
+.formulario input[type=text],.formulario input[type=tel]{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--li2);border-radius:12px;padding:12px 14px;min-height:48px}
+.formulario input:focus{outline:none;border-color:var(--ac)}
+.formulario .acepto{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5}
+.formulario .acepto input{width:18px;height:18px;margin-top:2px;accent-color:var(--ac);flex:none}
+.formulario .acepto a{color:var(--ac)}
+.formulario button{justify-self:center;border:0;cursor:pointer;margin-top:6px;font-family:inherit}
+.formulario button[disabled]{opacity:.6;cursor:default;transform:none}
+.trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.resultado{min-height:24px;font-size:15px;text-align:center;margin:4px 0 0}
+.resultado.bien{color:var(--ok)}
+.resultado.mal{color:var(--da)}
+.gracias{display:none;max-width:520px;margin:0 auto}
+.gracias h3{font-size:24px;margin:0 0 8px}
+.gracias p{margin:0 auto}
+
+@media (prefers-reduced-motion:reduce){
+  .pulso,.etiqueta .punto,.ia,.onda span{animation:none}
+  .pulso{opacity:0}
+  .b,.ap-cita,.dicho p,.noti,.ficha .fila,.ficha .nota-f,.semana .e.f{animation:none;opacity:1;transform:none}
+  .barras i{animation:none;transform:none}
+  html{scroll-behavior:auto}
+  .aparece,.palabra,.paso,.esquema .ia,.esquema .nodo,.ejemplo{opacity:1!important;transform:none!important;transition:none!important}
+  .ejemplo:not(.activo){opacity:0!important}
+  .esquema .linea{stroke-dasharray:none;stroke-dashoffset:0;transition:none}
+  .frase{height:auto}.frase .pegado{position:static;height:auto;padding:80px 0}
+  .adapta-et::before{animation:none}
+  .hora{opacity:1!important}
+  .planes.abierto{animation:none}
+}
 </style>
 </head>
 <body>
@@ -150,13 +415,14 @@ footer a:hover{color:var(--tx)}
     <a class="marca" href="#inicio" aria-label="GZLab, inicio"><span class="logo">GZ</span><span>GZ<b>Lab</b></span></a>
     <nav aria-label="Principal">
       <ul>
-        <li><a href="#que-hacemos">Qué hacemos</a></li>
-        <li><a href="#como">Cómo trabajamos</a></li>
-        <li><a href="#caso">Un caso real</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#servicios">Qué hacemos</a></li>
+        <li><a href="#para-quien">Para tu negocio</a></li>
+        <li><a href="#precios">Precios</a></li>
+        <li><a href="#como">Cómo lo hacemos</a></li>
+        <li><a href="#nosotros">Quiénes somos</a></li>
       </ul>
     </nav>
-    <a class="boton secundario" href="mailto:gzlab026@gmail.com">Escríbenos</a>
+    <a class="boton secundario" href="#contacto">Me interesa</a>
   </div>
 </header>
 
@@ -166,101 +432,464 @@ footer a:hover{color:var(--tx)}
     <div class="contenedor rejilla">
       <div>
         <span class="etiqueta"><span class="punto"></span>Automatización · Inteligencia artificial</span>
-        <h1>Procesos que <span class="dorado">trabajan solos</span>, con inteligencia artificial.</h1>
-        <p class="entradilla">En GZLab automatizamos las tareas repetitivas de los negocios: atender a los clientes, gestionar reservas, avisar a tiempo y conectar las herramientas que ya usas. Funciona las 24 horas y tú te centras en lo importante.</p>
+        <h1>Todo tu negocio. <span class="dorado">Funcionando solo.</span></h1>
+        <p class="entradilla"><strong>Clientes, agenda, avisos y números, conectados.</strong> Automatizamos el día a día de tu negocio con inteligencia artificial, adaptado a tu forma de trabajar.</p>
         <div class="acciones">
-          <a class="boton primario" href="#que-hacemos">Ver qué hacemos</a>
-          <a class="boton secundario" href="#caso">Un caso real</a>
+          <a class="boton primario" href="#servicios">Ver cómo funciona</a>
+          <a class="boton secundario" href="#contacto">Me interesa</a>
         </div>
       </div>
 
-      <div class="flujo" role="img" aria-label="Esquema de una automatización: un mensaje de WhatsApp o una llamada llega a la IA, que consulta la agenda, reserva la cita y avisa al dueño en el móvil.">
-        <div class="cabecera-flujo"><span>flujo · nueva reserva</span><span class="estado">activo</span></div>
-        <svg viewBox="0 0 440 300" aria-hidden="true">
-          <!-- líneas -->
-          <path class="linea" d="M110 70 C 160 70, 160 150, 200 150"/>
-          <path class="linea" d="M110 230 C 160 230, 160 150, 200 150"/>
-          <path class="linea" d="M280 150 C 310 150, 310 70, 330 70"/>
-          <path class="linea" d="M280 150 C 310 150, 310 230, 330 230"/>
-          <path class="pulso" d="M110 70 C 160 70, 160 150, 200 150"/>
-          <path class="pulso p2" d="M110 230 C 160 230, 160 150, 200 150"/>
-          <path class="pulso p3" d="M280 150 C 310 150, 310 70, 330 70"/>
-          <path class="pulso p4" d="M280 150 C 310 150, 310 230, 330 230"/>
-          <!-- nodos de entrada -->
-          <g><rect x="14" y="44" width="96" height="52" rx="12" fill="#1B1E25" stroke="#454B59"/>
-            <text x="62" y="66" text-anchor="middle" fill="#F4EFE4" font-size="13" font-weight="600">WhatsApp</text>
-            <text x="62" y="83" text-anchor="middle" fill="#B9B2A4" font-size="11">mensaje</text></g>
-          <g><rect x="14" y="204" width="96" height="52" rx="12" fill="#1B1E25" stroke="#454B59"/>
-            <text x="62" y="226" text-anchor="middle" fill="#F4EFE4" font-size="13" font-weight="600">Teléfono</text>
-            <text x="62" y="243" text-anchor="middle" fill="#B9B2A4" font-size="11">llamada</text></g>
-          <!-- nodo IA -->
-          <g><rect x="200" y="112" width="80" height="76" rx="18" fill="rgba(214,176,74,.12)" stroke="#D6B04A"/>
-            <text x="240" y="146" text-anchor="middle" fill="#D6B04A" font-size="18" font-weight="800">IA</text>
-            <text x="240" y="166" text-anchor="middle" fill="#B9B2A4" font-size="11">entiende y decide</text></g>
-          <!-- nodos de salida -->
-          <g><rect x="330" y="44" width="96" height="52" rx="12" fill="#1B1E25" stroke="#454B59"/>
-            <text x="378" y="66" text-anchor="middle" fill="#F4EFE4" font-size="13" font-weight="600">Agenda</text>
-            <text x="378" y="83" text-anchor="middle" fill="#B9B2A4" font-size="11">cita reservada</text></g>
-          <g><rect x="330" y="204" width="96" height="52" rx="12" fill="#1B1E25" stroke="#454B59"/>
-            <text x="378" y="226" text-anchor="middle" fill="#F4EFE4" font-size="13" font-weight="600">Aviso</text>
-            <text x="378" y="243" text-anchor="middle" fill="#B9B2A4" font-size="11">al móvil del dueño</text></g>
-        </svg>
+      <div class="flujo" role="img" aria-label="Esquema: los mensajes, las llamadas, tus datos y las herramientas que ya usas llegan a la IA, que lo convierte en agenda al día, avisos al móvil, gráficos claros y tareas hechas.">
+        <div class="cab-flujo"><span>tu negocio · en marcha</span><span class="estado">activo</span></div>
+        <div class="esquema" id="esquema">
+          <svg id="lineas" aria-hidden="true"></svg>
+          <div class="col entra">
+            <div class="nodo"><span class="t">WhatsApp</span><span class="e">mensajes</span></div>
+            <div class="nodo"><span class="t">Teléfono</span><span class="e">llamadas</span></div>
+            <div class="nodo"><span class="t">Tus datos</span><span class="e">ventas, citas, cuentas</span></div>
+            <div class="nodo"><span class="t">Lo que ya usas</span><span class="e">correo, hojas, programas</span></div>
+          </div>
+          <div class="ia" id="ia"><b>IA</b><span>entiende<br>y decide</span></div>
+          <div class="col sale">
+            <div class="nodo"><span class="t">Agenda</span><span class="e">siempre al día</span></div>
+            <div class="nodo"><span class="t">Avisos</span><span class="e">al momento, al móvil</span></div>
+            <div class="nodo"><span class="t">Gráficos</span><span class="e">tus números, claros</span></div>
+            <div class="nodo"><span class="t">Tareas hechas</span><span class="e">sin que tengas que tocarlas</span></div>
+          </div>
+        </div>
+        <div class="pie-flujo"><b>a tu medida</b> · conectamos lo que ya usas y lo adaptamos a tu forma de trabajar</div>
       </div>
     </div>
   </div>
 
-  <!-- QUÉ HACEMOS -->
-  <section id="que-hacemos">
-    <div class="contenedor">
-      <div class="titulo-seccion">
-        <span class="mini">Qué hacemos</span>
-        <h2>La IA se encarga de lo repetitivo. Tú, del negocio.</h2>
-        <p>Diseñamos automatizaciones a medida que unen inteligencia artificial y las herramientas de cada día.</p>
+  <!-- FRASE GRANDE: se ilumina palabra a palabra al bajar -->
+  <div class="frase" id="frase">
+    <div class="pegado">
+      <div class="contenedor">
+        <h2>Tú a lo tuyo. <span class="morado">Del resto se encarga la IA.</span></h2>
       </div>
-      <div class="tarjetas">
-        <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div>
-          <h3>Atención al cliente con IA</h3>
-          <p>Una recepcionista virtual que contesta por WhatsApp y por teléfono, con voz natural, en varios idiomas y a cualquier hora.</p>
-        </article>
-        <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></div>
-          <h3>Reservas y agenda</h3>
-          <p>Consulta los huecos libres, reserva, cambia y cancela citas según tus horarios y reglas, sin dobles reservas.</p>
-        </article>
-        <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-          <h3>Avisos y recordatorios</h3>
-          <p>Notificaciones al móvil cuando pasa algo importante y recordatorios automáticos para que nadie se olvide de su cita.</p>
-        </article>
-        <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h4a4 4 0 0 1 4 4v5M15 18h-4a4 4 0 0 1-4-4V9"/></svg></div>
-          <h3>Conexión entre herramientas</h3>
-          <p>Hacemos que hablen entre sí el correo, las hojas de cálculo, los calendarios, la mensajería y el resto de tus programas.</p>
-        </article>
-        <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
-          <h3>Informes automáticos</h3>
-          <p>Resúmenes diarios o semanales con lo que ha pasado: clientes, citas, incidencias y costes, sin tener que buscarlo.</p>
-        </article>
-        <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2H22l-6 4.5 2.3 7.3L12 16.5 5.7 21l2.3-7.3-6-4.5h7.6z"/></svg></div>
-          <h3>Procesos a medida</h3>
-          <p>Si una tarea se repite cada día, casi siempre se puede automatizar. Estudiamos tu caso y buscamos la forma más sencilla.</p>
-        </article>
+    </div>
+  </div>
+
+  <!-- SERVICIOS: 4 BLOQUES + A TU MEDIDA, CON EL TELÉFONO -->
+  <section id="servicios">
+    <div class="contenedor">
+      <div class="titulo-seccion aparece">
+        <span class="mini">Qué hacemos</span>
+        <h2>Cuatro bloques que trabajan juntos.</h2>
+        <p>Se adaptan a cada negocio: eliges los que necesitas.</p>
+      </div>
+      <div class="servicios">
+        <div>
+          <div class="bloques">
+            <article class="bloque">
+              <div class="cab"><div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div><span class="nombre">Atender</span></div>
+              <h3>Siempre abierto.</h3>
+              <p>La IA contesta por WhatsApp y por teléfono, con voz natural y a cualquier hora: da, cambia y cancela citas mirando tu agenda real y resuelve las dudas de tus clientes.</p>
+              <div class="chips"><button class="chip" data-k="whatsapp">WhatsApp con IA</button><button class="chip" data-k="telefono">Teléfono con IA</button><button class="chip" data-k="numero">Tu número de siempre</button><button class="chip" data-k="idiomas">Idiomas</button></div>
+            </article>
+            <article class="bloque">
+              <div class="cab"><div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></div><span class="nombre">Organizar</span></div>
+              <h3>Todo en su sitio.</h3>
+              <p>Agenda, clientes y conversaciones en una app sencilla para el móvil o la tablet. Sin dobles reservas, sin papeles.</p>
+              <div class="chips"><button class="chip" data-k="agenda">Agenda</button><button class="chip" data-k="profesionales">Agenda por profesional</button><button class="chip" data-k="fichas">Fichas de clientes</button><button class="chip" data-k="conversaciones">Conversaciones</button><button class="chip" data-k="ausencias">Ausencias y cancelaciones</button><button class="chip" data-k="fijas">Citas fijas</button></div>
+            </article>
+            <article class="bloque">
+              <div class="cab"><div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></div><span class="nombre">Fidelizar</span></div>
+              <h3>Que vuelvan.</h3>
+              <p>Recordatorios antes de cada cita, reseñas, campañas y bonos. Menos huecos vacíos y clientes que se sienten atendidos.</p>
+              <div class="chips"><button class="chip" data-k="recordatorios">Recordatorios</button><button class="chip" data-k="resenas">Reseñas en Google</button><button class="chip" data-k="campanas">Campañas por WhatsApp</button><button class="chip" data-k="bonos">Bonos mensuales</button></div>
+            </article>
+            <article class="bloque">
+              <div class="cab"><div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><span class="nombre">Controlar</span></div>
+              <h3>Tus números, claros.</h3>
+              <p>Te enteras al momento de lo importante, cada día sabes cómo viene el siguiente y ves cómo va tu negocio en gráficos sencillos.</p>
+              <div class="chips"><button class="chip" data-k="avisos">Avisos al móvil</button><button class="chip" data-k="resumen">Resumen del día</button><button class="chip" data-k="graficos">Resultados en gráficos</button></div>
+            </article>
+            <article class="bloque medida">
+              <div class="cab"><div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div><span class="nombre">A tu medida</span></div>
+              <h3>¿Necesitas algo distinto?</h3>
+              <p>Conectamos las herramientas que ya usas y diseñamos procesos a medida. Si una tarea se repite cada día, casi siempre se puede automatizar.</p>
+              <div class="chips"><button class="chip" data-k="medida">Procesos a medida</button></div>
+            </article>
+          </div>
+          <p class="toca">Toca cualquier servicio para verlo en marcha →</p>
+        </div>
+
+        <!-- TELÉFONO: una vista por servicio -->
+        <div class="muestra" id="muestra" aria-live="polite">
+          <div class="cab-card"><span>vista previa</span><span class="vivo">en marcha</span></div>
+
+          <div class="vista" data-k="whatsapp">
+            <div class="que"><h3>WhatsApp con IA</h3><p>Contesta al momento, a cualquier hora, y reserva mirando tu agenda real.</p></div>
+            <div class="telefono"><div class="pantalla" data-paso=".9"><div class="cab-wa"><span class="av">N</span><span><b>Estudio Nova</b><small>en línea</small></span></div>
+              <div class="chat">
+                <div class="b yo" data-d>Hola! Tenéis hueco mañana por la tarde para una manicura?<i>23:14</i></div>
+                <div class="b el" data-d>¡Hola, Laura! Mañana sábado tengo a las 17:00, 17:30 y 18:30. ¿Te va bien alguna?<i>23:14</i></div>
+                <div class="b yo" data-d>17:30 perfecto<i>23:15</i></div>
+                <div class="b el" data-d>Te lo dejo así: manicura, mañana sábado a las 17:30. ¿Te lo confirmo?<i>23:15</i></div>
+                <div class="b yo" data-d>Sí<i>23:15</i></div>
+                <div class="b el" data-d>Hecho ✅ Te esperamos mañana a las 17:30 en Calle Mayor 12. ¡Hasta mañana!<i>23:15</i></div>
+              </div></div></div>
+          </div>
+
+          <div class="vista" data-k="telefono">
+            <div class="que"><h3>Teléfono con IA</h3><p>Coge las llamadas con voz natural cuando tú no puedes.</p></div>
+            <div class="telefono"><div class="pantalla p-oscura" data-paso="1.1"><div class="barra-tel"><span>11:06</span><span>●●● 5G ▮</span></div>
+              <div class="llamada"><span class="av">IA</span><span class="tit">La IA está atendiendo</span><span class="info">Llamada · 01:12</span>
+                <div class="onda"><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="dicho">
+                  <p data-d><b>Cliente:</b> Hola, quería pedir hora para el sábado por la mañana.</p>
+                  <p data-d><b>IA:</b> Claro. El sábado tengo a las diez y a las once y media. ¿Cuál prefieres?</p>
+                  <p data-d><b>Cliente:</b> A las diez. Corte y peinado.</p>
+                  <p data-d><b>IA:</b> Perfecto, Jordi: corte y peinado el sábado a las diez. ¡Te esperamos!</p>
+                </div></div></div></div>
+          </div>
+
+          <div class="vista" data-k="numero">
+            <div class="que"><h3>Tu número de siempre</h3><p>Tus clientes llaman al número que ya conocen. Si no lo coges, contesta la IA.</p></div>
+            <div class="telefono"><div class="pantalla p-oscura" data-paso="1"><div class="barra-tel"><span>12:40</span><span>●●● 5G ▮</span></div>
+              <div class="llamada"><span class="av">IA</span><span class="tit">977 12 34 56</span><span class="info">Estudio Nova · tu número de siempre</span>
+                <div class="onda"><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="dicho">
+                  <p data-d>Suena tu teléfono… estás con un cliente.</p>
+                  <p data-d>Al tercer tono, la IA coge la llamada.</p>
+                  <p data-d><b>IA:</b> Estudio Nova, ¿dígame?</p>
+                  <p class="ok" data-d>Cita apuntada en tu agenda ✅</p>
+                </div></div></div></div>
+          </div>
+
+          <div class="vista" data-k="idiomas">
+            <div class="que"><h3>Idiomas</h3><p>Cada cliente, atendido en su idioma.</p></div>
+            <div class="telefono"><div class="pantalla" data-paso=".9"><div class="cab-wa"><span class="av">N</span><span><b>Estudio Nova</b><small>en línea</small></span></div>
+              <div class="chat">
+                <div class="b yo" data-d>Hi! Do you have anything tomorrow morning for a haircut?<i>09:02</i></div>
+                <div class="b el" data-d>Hi Emma! Tomorrow I have 10:00 or 11:30. Which one works for you?<i>09:02</i></div>
+                <div class="b yo" data-d>11:30 please<i>09:03</i></div>
+                <div class="b el" data-d>Done ✅ Haircut tomorrow at 11:30. See you then!<i>09:03</i></div>
+              </div></div></div>
+          </div>
+
+          <div class="vista" data-k="agenda">
+            <div class="que"><h3>Agenda</h3><p>Todas las citas en un sitio, entren por donde entren. Sin dobles reservas.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".3"><div class="barra-tel"><span>09:58</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Estudio Nova</small><b>Hoy, viernes</b></div>
+              <div class="ap-lista">
+                <div class="ap-cita" data-d><span class="h">10:00</span><span class="n">Núria Puig<span>Corte y peinado · Ana</span></span></div>
+                <div class="ap-cita" data-d><span class="h">10:45</span><span class="n">Marc Serra<span>Corte</span></span><span class="c">WhatsApp</span></div>
+                <div class="ap-cita libre" data-d><span class="h">11:15</span><span class="n">Libre</span></div>
+                <div class="ap-cita" data-d><span class="h">11:30</span><span class="n">Laura Font<span>Manicura</span></span><span class="c">Teléfono</span></div>
+                <div class="ap-cita" data-d><span class="h">12:15</span><span class="n">Pau Vidal<span>Masaje 60 min</span></span><span class="c">Fija</span></div>
+                <div class="ap-cita" data-d><span class="h">13:30</span><span class="n">Sergi Mas<span>Tinte · Marta</span></span></div>
+              </div>
+              <div class="ap-nav"><span class="on">Agenda</span><span>Clientes</span><span>Chats</span><span>Ajustes</span></div></div></div>
+          </div>
+
+          <div class="vista" data-k="profesionales">
+            <div class="que"><h3>Agenda por profesional</h3><p>Cada persona del equipo con su agenda. El cliente puede pedir con quién.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".35"><div class="barra-tel"><span>09:58</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Estudio Nova</small><b>Hoy, viernes</b></div>
+              <div class="semana">
+                <div><span class="d">Ana</span><span class="e f" data-d>10:00 Núria</span><span class="e f" data-d>11:30 Laura</span><span class="e f" data-d>17:00 Carla</span></div>
+                <div><span class="d">Marta</span><span class="e f" data-d>10:45 Marc</span><span class="e f" data-d>13:30 Sergi</span></div>
+                <div><span class="d">Joan</span><span class="e f" data-d>12:15 Pau</span><span class="e f" data-d>16:30 Pol</span><span class="e f" data-d>18:00 Jordi</span></div>
+              </div>
+              <div class="nota-tel">Laura pidió con Ana: la IA solo le ofreció las horas libres de Ana.</div>
+              <div class="ap-nav"><span class="on">Agenda</span><span>Clientes</span><span>Chats</span><span>Ajustes</span></div></div></div>
+          </div>
+
+          <div class="vista" data-k="fichas">
+            <div class="que"><h3>Fichas de clientes</h3><p>Historial, preferencias y notas de cada cliente. La IA los reconoce.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".4"><div class="barra-tel"><span>12:20</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Ficha de cliente</small><b>Laura Font</b><span class="sub">Cliente desde marzo · 14 visitas</span></div>
+              <div class="ficha">
+                <div class="fila" data-d>Servicio habitual<span>Manicura · cada 3 semanas</span></div>
+                <div class="fila" data-d>Última visita<span>28 oct · Ana</span></div>
+                <div class="fila" data-d>Próxima cita<span>Sáb 17:30 · Manicura</span></div>
+                <div class="fila" data-d>Ausencias<span>0</span></div>
+                <div class="nota-f" data-d>Nota: prefiere tonos nude y forma almendra.</div>
+              </div>
+              <div class="ap-nav"><span>Agenda</span><span class="on">Clientes</span><span>Chats</span><span>Ajustes</span></div></div></div>
+          </div>
+
+          <div class="vista" data-k="conversaciones">
+            <div class="que"><h3>Conversaciones</h3><p>Todo lo que la IA ha hablado con tus clientes, por WhatsApp y por teléfono.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".4"><div class="barra-tel"><span>12:20</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Conversaciones</small><b>Hoy</b></div>
+              <div class="ap-lista">
+                <div class="ap-cita" data-d><span class="h">23:15</span><span class="n">Laura Font<span>Cita reservada · sábado 17:30</span></span><span class="c">WhatsApp</span></div>
+                <div class="ap-cita" data-d><span class="h">11:06</span><span class="n">Jordi Puig<span>Llamada · 1 min 12 s · cita reservada</span></span><span class="c morado">Llamada</span></div>
+                <div class="ap-cita" data-d><span class="h">10:41</span><span class="n">Carla Ros<span>Cita cambiada al miércoles 12:00</span></span><span class="c">WhatsApp</span></div>
+                <div class="ap-cita" data-d><span class="h">09:12</span><span class="n">Proveedor<span>Recado para ti</span></span><span class="c morado">Llamada</span></div>
+              </div>
+              <div class="ap-nav"><span>Agenda</span><span>Clientes</span><span class="on">Chats</span><span>Ajustes</span></div></div></div>
+          </div>
+
+          <div class="vista" data-k="ausencias">
+            <div class="que"><h3>Ausencias y cancelaciones</h3><p>Quién no vino y quién canceló, apuntado solo y contado en su ficha.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".7"><div class="barra-tel"><span>13:05</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Estudio Nova</small><b>Hoy, viernes</b></div>
+              <div class="ap-lista">
+                <div class="ap-cita" data-d><span class="h">12:15</span><span class="n">Pau Vidal<span>Masaje 60 min</span></span><span class="c rojo">Ausencia</span></div>
+                <div class="ap-cita" data-d><span class="h">13:30</span><span class="n">Sergi Mas<span>Tinte · cancelada por el cliente</span></span><span class="c gris">Cancelada</span></div>
+                <div class="ap-cita" data-d><span class="h">13:30</span><span class="n">Sergi Mas<span>Recuperada: era un error</span></span><span class="c">Recuperada</span></div>
+              </div>
+              <div class="nota-tel">Cada ausencia queda contada en la ficha del cliente.</div>
+              <div class="ap-nav"><span class="on">Agenda</span><span>Clientes</span><span>Chats</span><span>Ajustes</span></div></div></div>
+          </div>
+
+          <div class="vista" data-k="fijas">
+            <div class="que"><h3>Citas fijas</h3><p>Los clientes de siempre, con su hueco reservado sin que nadie lo apunte.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".8"><div class="barra-tel"><span>09:58</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Pau Vidal · cita fija</small><b>Cada 2 semanas</b><span class="sub">Martes a las 18:00 · Masaje 60 min</span></div>
+              <div class="semana">
+                <div><span class="d">Mar 24</span><span class="e">17:00 Marc</span><span class="e f" data-d>18:00 Pau · fija</span><span class="e">19:00 Sergi</span></div>
+                <div><span class="d">Mar 1 dic</span><span class="e">17:30 Jordi</span><span class="e">18:30 Carla</span></div>
+                <div><span class="d">Mar 8 dic</span><span class="e">16:30 Pol</span><span class="e f" data-d>18:00 Pau · fija</span></div>
+              </div>
+              <div class="nota-tel">Se apunta sola, con la antelación que tú decidas. Si algún martes cierras o ya está ocupado, te avisa.</div>
+              <div class="ap-nav"><span class="on">Agenda</span><span>Clientes</span><span>Chats</span><span>Ajustes</span></div></div></div>
+          </div>
+
+          <div class="vista" data-k="recordatorios">
+            <div class="que"><h3>Recordatorios</h3><p>Un mensaje antes de cada cita. Si no puede venir, la cambia ahí mismo.</p></div>
+            <div class="telefono"><div class="pantalla" data-paso=".9"><div class="cab-wa"><span class="av">N</span><span><b>Estudio Nova</b><small>cuenta de empresa</small></span></div>
+              <div class="chat">
+                <div class="b sis" data-d>Hoy</div>
+                <div class="b el" data-d>Hola, Laura. Te recordamos tu cita en Estudio Nova mañana sábado a las 17:30 (manicura). Si no puedes venir, contesta a este mensaje y te la cambiamos.<i>19:00</i></div>
+                <div class="b yo" data-d>Uy, mejor a las 18:30 si puede ser<i>19:04</i></div>
+                <div class="b el" data-d>Sin problema: te la paso a mañana a las 18:30. ¿Te lo confirmo?<i>19:04</i></div>
+                <div class="b yo" data-d>Sí, gracias!<i>19:05</i></div>
+                <div class="b el" data-d>Listo ✅ Mañana a las 18:30.<i>19:05</i></div>
+              </div></div></div>
+          </div>
+
+          <div class="vista" data-k="resenas">
+            <div class="que"><h3>Reseñas en Google</h3><p>Después de la visita, un mensaje amable para pedir la reseña.</p></div>
+            <div class="telefono"><div class="pantalla" data-paso=".9"><div class="cab-wa"><span class="av">N</span><span><b>Estudio Nova</b><small>cuenta de empresa</small></span></div>
+              <div class="chat">
+                <div class="b sis" data-d>Hoy</div>
+                <div class="b el" data-d>Gracias por venir hoy, Laura. Si te ha gustado, nos ayuda mucho una reseña en Google: g.page/estudionova ⭐<i>18:40</i></div>
+                <div class="b yo" data-d>Hecho! 5 estrellas 💅<i>18:52</i></div>
+              </div></div></div>
+          </div>
+
+          <div class="vista" data-k="campanas">
+            <div class="que"><h3>Campañas por WhatsApp</h3><p>Avisa a tus clientes de novedades y fechas especiales. Si contestan, la IA les da cita.</p></div>
+            <div class="telefono"><div class="pantalla" data-paso=".9"><div class="cab-wa"><span class="av">N</span><span><b>Estudio Nova</b><small>cuenta de empresa</small></span></div>
+              <div class="chat">
+                <div class="b sis" data-d>Hoy</div>
+                <div class="b el" data-d>Hola, Marc. En diciembre abrimos también los lunes por la tarde. Si quieres reservar para las fiestas, contesta a este mensaje y te buscamos hueco.<i>10:00</i></div>
+                <div class="b yo" data-d>El lunes 22 a las 18:00?<i>10:12</i></div>
+                <div class="b el" data-d>Te lo dejo: lunes 22 a las 18:00, corte. ¿Te lo confirmo?<i>10:12</i></div>
+              </div></div></div>
+          </div>
+
+          <div class="vista" data-k="bonos">
+            <div class="que"><h3>Bonos mensuales</h3><p>Clientes con cuota al mes y su hueco fijo. Ves quién está al día.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".4"><div class="barra-tel"><span>09:30</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Bonos mensuales</small><b>12 clientes</b><span class="sub">Cuota mensual · hueco fijo reservado</span></div>
+              <div class="ficha">
+                <div class="fila" data-d>Pau Vidal<span>Martes 18:00 · al día</span></div>
+                <div class="fila" data-d>Núria Puig<span>Sábado 10:00 · al día</span></div>
+                <div class="fila" data-d>Carla Ros<span>Jueves 19:00 · pendiente</span></div>
+                <div class="nota-f" data-d>Este mes: 11 cuotas cobradas, 1 pendiente.</div>
+              </div>
+              <div class="ap-nav"><span>Agenda</span><span class="on">Clientes</span><span>Chats</span><span>Ajustes</span></div></div></div>
+          </div>
+
+          <div class="vista" data-k="avisos">
+            <div class="que"><h3>Avisos al móvil</h3><p>Te enteras al momento de cada cita, cambio o recado.</p></div>
+            <div class="telefono"><div class="pantalla" data-paso="1"><div class="bloqueo"><div class="reloj">17:42</div><div class="fecha">viernes, 20 de noviembre</div>
+              <div class="noti" data-d><span class="ic">N</span><span><b>Nueva cita <small>· ahora</small></b><span>Laura Font · sábado 17:30 · Manicura (por WhatsApp)</span></span></div>
+              <div class="noti" data-d><span class="ic">N</span><span><b>Cita cambiada <small>· ahora</small></b><span>Carla Ros pasa del martes 11:30 al miércoles 12:00</span></span></div>
+              <div class="noti" data-d><span class="ic">N</span><span><b>Recado <small>· ahora</small></b><span>Un proveedor quiere hablar contigo. Te ha dejado su teléfono.</span></span></div>
+              </div></div></div>
+          </div>
+
+          <div class="vista" data-k="resumen">
+            <div class="que"><h3>Resumen del día</h3><p>Cada tarde, cómo viene mañana y qué ha pasado hoy.</p></div>
+            <div class="telefono"><div class="pantalla" data-paso="1"><div class="bloqueo"><div class="reloj">20:31</div><div class="fecha">viernes, 20 de noviembre</div>
+              <div class="noti" data-d><span class="ic">N</span><span><b>Mañana, sábado <small>· ahora</small></b><span>9 citas, de 10:00 a 19:30. La primera, Núria Puig (corte y peinado).<br>Hoy la IA ha dado 4 citas y ha cambiado 1.<br>Tienes 1 recado pendiente.</span></span></div>
+              </div></div></div>
+          </div>
+
+          <div class="vista" data-k="graficos">
+            <div class="que"><h3>Resultados en gráficos</h3><p>Cómo va tu negocio, de un vistazo y sin hojas de cálculo.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".25"><div class="barra-tel"><span>21:10</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Resultados · noviembre</small><b>312 citas</b><span class="sub">18 % más que en octubre</span></div>
+              <div class="grafico">
+                <div class="barras"><i data-d style="height:58%"></i><i data-d style="height:70%"></i><i data-d style="height:64%"></i><i data-d style="height:82%"></i><i class="ahora" data-d style="height:95%"></i></div>
+                <div class="ejes"><span>jul</span><span>ago</span><span>sep</span><span>oct</span><span>nov</span></div>
+              </div>
+              <div class="ficha">
+                <div class="fila" data-d>Por WhatsApp<span>46 %</span></div>
+                <div class="fila" data-d>Por teléfono<span>21 %</span></div>
+                <div class="fila" data-d>Huecos vacíos<span>6 %</span></div>
+              </div>
+              <div class="ap-nav"><span>Agenda</span><span>Clientes</span><span class="on">Números</span><span>Ajustes</span></div></div></div>
+          </div>
+
+          <div class="vista" data-k="medida">
+            <div class="que"><h3>Procesos a medida</h3><p>Lo que hoy haces a mano cada día, hecho solo y conectado con lo que ya usas.</p></div>
+            <div class="telefono"><div class="pantalla p-app" data-paso=".5"><div class="barra-tel"><span>20:00</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Hecho hoy, solo</small><b>4 tareas</b></div>
+              <div class="ficha">
+                <div class="fila" data-d>Pedido al proveedor<span class="hecho">✓ queda poco tinte</span></div>
+                <div class="fila" data-d>Facturas del día<span class="hecho">✓ enviadas</span></div>
+                <div class="fila" data-d>Ventas a tu hoja de cálculo<span class="hecho">✓ al día</span></div>
+                <div class="fila" data-d>Copia de seguridad<span class="hecho">✓ hecha</span></div>
+                <div class="nota-f morado" data-d>Si una tarea se repite cada día, casi siempre se puede automatizar.</div>
+              </div>
+              <div class="ap-nav"><span>Agenda</span><span>Clientes</span><span>Chats</span><span class="on">Tareas</span></div></div></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CÓMO TRABAJAMOS -->
+  <!-- PARA QUIÉN -->
+  <section id="para-quien">
+    <div class="contenedor quien">
+      <div class="titulo-seccion aparece">
+        <span class="mini">Para tu negocio</span>
+        <h2>Cada negocio, a su medida.</h2>
+        <p>Partimos de lo que ya funciona y lo adaptamos a tu forma de trabajar.</p>
+      </div>
+      <div class="aparece">
+        <div class="adapta-et">La misma base. Tu forma de trabajar.</div>
+        <div class="reserva">
+          <div class="cab-flujo"><span>hecho solo · hoy</span><span class="estado">en marcha</span></div>
+          <ul class="ejemplos" id="ejemplos">
+            <li class="ejemplo activo"><span class="negocio">Peluquería</span><b>Cita reservada a las 23:14</b><span class="det">Por WhatsApp, con el local cerrado.</span><span class="via">Atender</span></li>
+            <li class="ejemplo"><span class="negocio">Taller</span><b>Toca la revisión de tu coche</b><span class="det">Recordatorio al cliente: «¿Te busco hueco esta semana?»</span><span class="via">Fidelizar</span></li>
+            <li class="ejemplo"><span class="negocio">Gimnasio</span><b>Clase de pilates del jueves, completa</b><span class="det">A quien pregunta, la IA le ofrece la del viernes.</span><span class="via">Organizar</span></li>
+            <li class="ejemplo"><span class="negocio">Restaurante</span><b>Reseña nueva en Google ★★★★★</b><span class="det">Pedida sola después de la cena.</span><span class="via">Fidelizar</span></li>
+            <li class="ejemplo"><span class="negocio">Centro de estética</span><b>Resumen del mes</b><span class="det">312 citas, un 18 % más. El gráfico, en tu móvil.</span><span class="via">Controlar</span></li>
+            <li class="ejemplo"><span class="negocio">Floristería</span><b>Quedan pocas rosas</b><span class="det">Pedido al proveedor, enviado solo.</span><span class="via morado">A tu medida</span></li>
+          </ul>
+          <div class="puntos" id="puntos" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EJEMPLO: UN DÍA EN UNA BARBERÍA (el teléfono cambia según bajas) -->
+  <section id="ejemplo">
+    <div class="contenedor">
+      <div class="titulo-seccion aparece">
+        <span class="mini">Un ejemplo</span>
+        <h2>Así sería en una barbería.</h2>
+        <p>Un día cualquiera, de principio a fin. Baja y míralo en el teléfono.</p>
+      </div>
+      <div class="dia">
+        <div class="tel-dia">
+          <div class="telefono" id="tel-dia">
+            <div class="pantalla activa" data-h="0" data-paso=".9"><div class="cab-wa"><span class="av">C</span><span><b>Barbería Centro</b><small>en línea</small></span></div>
+              <div class="chat">
+                <div class="b yo" data-d>Hola! Mañana a las 10 tenéis hueco para corte y barba?<i>23:40</i></div>
+                <div class="b el" data-d>¡Hola, Marc! Mañana viernes a las 10:00 lo tengo libre. ¿Te lo reservo: corte y barba?<i>23:40</i></div>
+                <div class="b yo" data-d>Sí, perfecto<i>23:41</i></div>
+                <div class="b el" data-d>Hecho ✅ Mañana a las 10:00. ¡Hasta mañana!<i>23:41</i></div>
+              </div></div>
+            <div class="pantalla p-app" data-h="1" data-paso=".3"><div class="barra-tel"><span>09:00</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Barbería Centro</small><b>Hoy, viernes</b></div>
+              <div class="ap-lista">
+                <div class="ap-cita" data-d><span class="h">10:00</span><span class="n">Marc Serra<span>Corte y barba</span></span><span class="c">WhatsApp</span></div>
+                <div class="ap-cita" data-d><span class="h">10:45</span><span class="n">Jordi Puig<span>Corte</span></span><span class="c">WhatsApp</span></div>
+                <div class="ap-cita" data-d><span class="h">11:30</span><span class="n">Àlex Font<span>Degradado</span></span></div>
+                <div class="ap-cita" data-d><span class="h">12:15</span><span class="n">Pau Vidal<span>Arreglo de barba</span></span><span class="c">Fija</span></div>
+                <div class="ap-cita" data-d><span class="h">13:15</span><span class="n">Sergi Mas<span>Corte</span></span><span class="c">WhatsApp</span></div>
+                <div class="ap-cita" data-d><span class="h">17:00</span><span class="n">Pol Ruiz<span>Corte y barba</span></span><span class="c">WhatsApp</span></div>
+              </div>
+              <div class="ap-nav"><span class="on">Agenda</span><span>Clientes</span><span>Chats</span><span>Ajustes</span></div></div>
+            <div class="pantalla p-app" data-h="2" data-paso=".7"><div class="barra-tel"><span>12:31</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>Conversaciones</small><b>Hoy</b></div>
+              <div class="ap-lista">
+                <div class="ap-cita" data-d><span class="h">11:50</span><span class="n">Sergi Mas<span>Cancela su cita de las 13:15</span></span><span class="c gris">Cancelada</span></div>
+                <div class="ap-cita" data-d><span class="h">12:30</span><span class="n">Nil Roca<span>Pide hora para hoy · se queda las 13:15</span></span><span class="c">Reservada</span></div>
+              </div>
+              <div class="nota-tel">El hueco no se ha quedado vacío: nadie ha tenido que coger el teléfono.</div>
+              <div class="ap-nav"><span>Agenda</span><span>Clientes</span><span class="on">Chats</span><span>Ajustes</span></div></div>
+            <div class="pantalla" data-h="3" data-paso=".9"><div class="cab-wa"><span class="av">C</span><span><b>Barbería Centro</b><small>cuenta de empresa</small></span></div>
+              <div class="chat">
+                <div class="b sis" data-d>Hoy</div>
+                <div class="b el" data-d>Hola, Jordi. Te recordamos tu cita en Barbería Centro mañana sábado a las 10:30 (corte). Si no puedes venir, contesta a este mensaje y te la cambiamos.<i>19:00</i></div>
+                <div class="b yo" data-d>Ahí estaré 👍<i>19:06</i></div>
+              </div></div>
+            <div class="pantalla" data-h="4" data-paso="1"><div class="bloqueo"><div class="reloj">20:30</div><div class="fecha">viernes</div>
+              <div class="noti" data-d><span class="ic">C</span><span><b>Mañana, sábado <small>· ahora</small></b><span>11 citas, de 9:30 a 14:00. La primera, Jordi Puig (corte).<br>Hoy la IA ha dado 6 citas y ha recuperado 1 hueco.</span></span></div>
+              </div></div>
+            <div class="pantalla p-app" data-h="5" data-paso=".25"><div class="barra-tel"><span>21:10</span><span>●●● 5G ▮</span></div>
+              <div class="ap-cab"><small>¿Cómo vamos? · noviembre</small><b>318 clientes</b><span class="sub">12 % más que en noviembre del año pasado</span></div>
+              <div class="grafico">
+                <div class="barras"><i data-d style="height:60%"></i><i data-d style="height:66%"></i><i data-d style="height:71%"></i><i data-d style="height:78%"></i><i class="ahora" data-d style="height:92%"></i></div>
+                <div class="ejes"><span>jul</span><span>ago</span><span>sep</span><span>oct</span><span>nov</span></div>
+              </div>
+              <div class="ficha">
+                <div class="fila" data-d>Reservas por WhatsApp<span>58 %</span></div>
+                <div class="fila" data-d>Huecos recuperados<span>14</span></div>
+              </div>
+              <div class="ap-nav"><span>Agenda</span><span>Clientes</span><span class="on">Números</span><span>Ajustes</span></div></div>
+          </div>
+        </div>
+        <div class="horas">
+          <div class="hora actual"><span class="cuando">23:40</span><h3>Un cliente reserva por WhatsApp.</h3><p>La barbería está cerrada. La IA mira la agenda, le ofrece la hora y se la reserva.</p></div>
+          <div class="hora"><span class="cuando">09:00</span><h3>Abres y la agenda ya está hecha.</h3><p>Todas las citas en su sitio, entren por donde entren. Sin papeles y sin dobles reservas.</p></div>
+          <div class="hora"><span class="cuando">12:30</span><h3>Un hueco que no se pierde.</h3><p>Un cliente cancela. Poco después, otro pide hora para hoy y la IA le da ese hueco.</p></div>
+          <div class="hora"><span class="cuando">19:00</span><h3>Los de mañana, avisados.</h3><p>Cada cliente recibe su recordatorio. Si no puede venir, la cambia ahí mismo.</p></div>
+          <div class="hora"><span class="cuando">20:30</span><h3>Te llega el resumen del día.</h3><p>Cómo viene mañana y qué ha hecho hoy la IA. Sin buscar nada.</p></div>
+          <div class="hora"><span class="cuando">Fin de mes</span><h3>¿Cómo vamos?</h3><p>Tus clientes del mes, comparados con el año pasado. De un vistazo.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRECIOS: orientativos, detrás de un botón -->
+  <section id="precios">
+    <div class="contenedor">
+      <div class="titulo-seccion aparece">
+        <span class="mini">Precios</span>
+        <h2>Precio cerrado al mes.</h2>
+        <p>Según los servicios que elijas y los clientes que atiendes. Total transparencia: siempre sabes lo que pagas. Si un mes superas tu plan, te avisamos y no se cobra de más; si se mantiene, te proponemos el plan que mejor encaja.</p>
+      </div>
+      <button type="button" class="boton secundario" id="ver-precios" aria-expanded="false" aria-controls="planes">Ver ejemplos de precio</button>
+      <div class="planes" id="planes">
+        <div class="plan destacado">
+          <span class="tam">Pequeño</span>
+          <span class="cuanto">Hasta 3 profesionales · hasta 300 clientes al mes</span>
+          <span class="precio"><small>desde </small>60 €<small> /mes</small></span>
+          <ul><li>App con agenda, clientes y resultados</li><li>WhatsApp con IA</li><li>Recordatorios</li><li>Resumen del día</li></ul>
+          <span class="como">Como la barbería del ejemplo.</span>
+        </div>
+        <div class="plan">
+          <span class="tam">Mediano</span>
+          <span class="cuanto">De 4 a 5 profesionales · hasta 700 clientes al mes</span>
+          <span class="precio"><small>desde </small>120 €<small> /mes</small></span>
+          <ul><li>App con agenda, clientes y resultados</li><li>WhatsApp con IA</li><li>Teléfono con IA</li><li>Recordatorios</li><li>Avisos al móvil</li><li>Resumen del día</li></ul>
+        </div>
+        <div class="plan">
+          <span class="tam">Grande</span>
+          <span class="cuanto">Más de 5 profesionales · hasta 1.600 clientes al mes</span>
+          <span class="precio"><small>desde </small>240 €<small> /mes</small></span>
+          <ul><li>Todo lo del mediano</li><li>Citas fijas</li><li>Más conversaciones, llamadas y recordatorios</li></ul>
+        </div>
+        <p class="nota-precios">Precios orientativos, IVA aparte. Te preparamos el tuyo sin compromiso. <a href="#contacto">Pide tu precio</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO LO HACEMOS -->
   <section id="como">
     <div class="contenedor">
-      <div class="titulo-seccion">
-        <span class="mini">Cómo trabajamos</span>
+      <div class="titulo-seccion aparece">
+        <span class="mini">Cómo lo hacemos</span>
         <h2>De la idea a un proceso que funciona solo.</h2>
         <p>Sin complicaciones técnicas para ti: nosotros nos ocupamos de todo.</p>
       </div>
-      <div class="pasos">
+      <div class="carril" aria-hidden="true"><i id="carril"></i></div>
+      <div class="pasos" id="pasos">
         <div class="paso"><h3>Escuchamos</h3><p>Nos cuentas cómo trabajas y qué tareas te quitan más tiempo.</p></div>
         <div class="paso"><h3>Diseñamos</h3><p>Proponemos la automatización más sencilla que resuelva el problema de verdad.</p></div>
         <div class="paso"><h3>Probamos</h3><p>La ponemos a prueba con casos reales antes de que la use ningún cliente.</p></div>
@@ -269,58 +898,80 @@ footer a:hover{color:var(--tx)}
     </div>
   </section>
 
-  <!-- CASO REAL -->
-  <section id="caso">
-    <div class="contenedor">
-      <div class="caso">
-        <div>
-          <span class="mini" style="font-family:var(--mono);font-size:12.5px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase">Un caso real</span>
-          <h2>Una recepcionista virtual para barberías</h2>
-          <p>Las barberías pierden clientes cuando no pueden coger el teléfono con las manos ocupadas. Por eso creamos a Claudia: atiende por WhatsApp y por teléfono como lo haría alguien en el mostrador.</p>
-          <ul class="lista">
-            <li>Conoce los servicios, precios, horarios y días de cierre.</li>
-            <li>Ofrece las horas libres y reserva, cambia o cancela la cita.</li>
-            <li>Reconoce a los clientes habituales y les saluda por su nombre.</li>
-            <li>Avisa al dueño en el móvil de cada reserva o recado.</li>
-            <li>El dueño lo controla todo desde una app sencilla: agenda, clientes y ajustes.</li>
-          </ul>
-        </div>
-        <div class="chat" aria-label="Ejemplo de conversación por WhatsApp">
-          <div class="quien"><span class="avatar">C</span><div><strong>Claudia</strong><small>recepcionista virtual</small></div></div>
-          <div class="burbuja cliente">Hola, ¿tenéis hueco mañana por la tarde para un corte?</div>
-          <div class="burbuja ia">¡Hola! Mañana por la tarde tengo a las 16:00, a las 17:00 o a las 18:30. ¿Cuál te viene mejor?</div>
-          <div class="burbuja cliente">A las 17:00</div>
-          <div class="burbuja ia">Hecho, te apunto mañana a las 17:00 un corte. ¡Nos vemos!</div>
-          <div class="sistema">aviso enviado al móvil del dueño</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRINCIPIOS -->
-  <section>
+  <!-- TECNOLOGÍA (sigue a "Cómo lo hacemos") -->
+  <section class="seguida">
     <div class="contenedor">
       <div class="titulo-seccion">
-        <span class="mini">Cómo lo hacemos</span>
         <h2>Tecnología seria, explicada en sencillo.</h2>
       </div>
       <div class="principios">
         <div class="principio"><h3>Privacidad primero</h3><p>Los datos de tus clientes se guardan en servidores en Europa y solo se usan para lo que tienen que hacer.</p></div>
         <div class="principio"><h3>Siempre vigilado</h3><p>Pruebas automáticas, avisos ante cualquier error y copias de seguridad cada día.</p></div>
         <div class="principio"><h3>Hecho a tu medida</h3><p>Nada de plantillas genéricas: la automatización se adapta a tu forma de trabajar, no al revés.</p></div>
-        <div class="principio"><h3>Precio cerrado</h3><p>Siempre sabes lo que pagas. Si un mes te pasas de tu tramo, te avisamos, pero no se cobra de más. Si se repite, lo hablamos y decidimos juntos para el mes siguiente.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACTO -->
+  <!-- QUIÉNES SOMOS -->
+  <section id="nosotros">
+    <div class="contenedor">
+      <div class="nosotros aparece">
+        <span class="mini">Quiénes somos</span>
+        <h2>Detrás de cada automatización, <span class="morado">personas.</span></h2>
+        <p>La diseñamos contigo, la montamos nosotros y la cuidamos cada día. No vendemos un programa y desaparecemos: lo adaptamos a tu negocio y seguimos a tu lado.</p>      </div>
+    </div>
+  </section>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  <section id="preguntas" class="seguida">
+    <div class="contenedor">
+      <div class="titulo-seccion aparece">
+        <span class="mini">Preguntas frecuentes</span>
+        <h2>Lo que suelen preguntarnos.</h2>
+      </div>
+      <div class="preguntas aparece">
+        <details><summary>¿Tengo que saber de informática?</summary><p>No. Lo montamos y lo cuidamos nosotros. Tú solo utilizas una app sencilla.</p></details>
+        <details><summary>¿Y si la IA no sabe contestar algo?</summary><p>Te deja el recado y te avisa al móvil. Nunca se inventa una respuesta.</p></details>
+        <details><summary>¿Hay permanencia?</summary><p>No. Pagas mes a mes y lo dejas cuando quieras.</p></details>
+        <details><summary>¿Cuánto se tarda en ponerlo en marcha?</summary><p>Unas dos semanas. Antes de activarlo, lo probamos con los datos reales de tu negocio.</p></details>
+        <details><summary>¿Qué pasa con los datos de mis clientes?</summary><p>Se guardan en servidores en Europa, solo se usan para tu negocio y las conversaciones se borran a los seis meses.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO: ME INTERESA -->
   <section id="contacto">
     <div class="contenedor">
       <div class="contacto">
-        <h2>¿Hay alguna tarea que repites cada día?</h2>
-        <p>Cuéntanosla. Te diremos si se puede automatizar y cómo.</p>
-        <a class="boton primario" href="mailto:gzlab026@gmail.com">Escríbenos un correo</a>
-        <div class="correo">gzlab026@gmail.com</div>
+        <div id="pedir">
+          <h2>Automático. Como debería ser.</h2>
+          <p>Déjanos tus datos y te contamos cómo funcionaría en tu negocio, como tú prefieras. Sin compromiso.</p>
+          <form class="formulario" id="formulario" novalidate>
+            <fieldset class="via-contacto">
+              <legend>¿Cómo prefieres que te contactemos?</legend>
+              <div class="opciones">
+                <label class="opcion"><input type="radio" name="contacto" value="whatsapp" checked><span>WhatsApp</span></label>
+                <label class="opcion"><input type="radio" name="contacto" value="llamada"><span>Llamada</span></label>
+                <label class="opcion"><input type="radio" name="contacto" value="correo"><span>Correo</span></label>
+              </div>
+            </fieldset>
+            <div class="dos">
+              <label>Tu nombre<input type="text" name="nombre" autocomplete="name" maxlength="80" required></label>
+              <label id="campo-telefono">Teléfono<input type="tel" name="telefono" autocomplete="tel" inputmode="tel" maxlength="20"></label>
+              <label id="campo-email" hidden>Correo<input type="email" name="email" autocomplete="email" inputmode="email" maxlength="120"></label>
+            </div>
+            <label>Tu negocio<input type="text" name="negocio" autocomplete="organization" maxlength="120" placeholder="Ej.: Barbería Centro, Tarragona" required></label>
+            <label class="trampa" aria-hidden="true">No rellenar<input type="text" name="web" tabindex="-1" autocomplete="off"></label>
+            <label class="acepto"><input type="checkbox" name="acepto" required><span>Acepto que GZLab use estos datos solo para contactarme por este tema, según la <a href="privacidad.html">política de privacidad</a>.</span></label>
+            <button type="submit" class="boton primario" id="enviar">Me interesa</button>
+            <p class="resultado" id="resultado" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+        <div class="gracias" id="gracias" role="status" aria-live="polite">
+          <h3>Gracias.</h3>
+          <p id="gracias-texto">Te escribimos muy pronto.</p>
+        </div>
+        <div class="correo">¿Prefieres escribir? <a href="mailto:gzlab026@gmail.com">gzlab026@gmail.com</a></div>
       </div>
     </div>
   </section>
@@ -328,9 +979,180 @@ footer a:hover{color:var(--tx)}
 
 <footer>
   <div class="contenedor fila">
-    <span>© 2026 GZLab · Automatización de procesos con IA</span>
+    <span>© 2026 GZLab · Tarragona · Todo tu negocio. Funcionando solo.</span>
     <a href="privacidad.html">Privacidad</a>
   </div>
 </footer>
+<script>
+// ── Esquema de la portada: líneas de cada entrada a la IA y de la IA a cada salida, con pulsos púrpura.
+function dibujarLineas() {
+  const caja = document.getElementById('esquema'), ia = document.getElementById('ia'), svg = document.getElementById('lineas');
+  const c = caja.getBoundingClientRect(), r = ia.getBoundingClientRect();
+  const iaY = r.top + r.height / 2 - c.top, iaIzq = r.left - c.left, iaDer = r.right - c.left;
+  let lineas = '', pulsos = '', i = 0;
+  caja.querySelectorAll('.col .nodo').forEach(n => {
+    const b = n.getBoundingClientRect(), y = b.top + b.height / 2 - c.top;
+    const entra = n.parentElement.classList.contains('entra');
+    const x1 = entra ? b.right - c.left : iaDer, y1 = entra ? y : iaY;
+    const x2 = entra ? iaIzq : b.left - c.left, y2 = entra ? iaY : y;
+    const mx = (x1 + x2) / 2;
+    const ruta = `M${x1.toFixed(1)} ${y1.toFixed(1)} C${mx.toFixed(1)} ${y1.toFixed(1)}, ${mx.toFixed(1)} ${y2.toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+    lineas += `<path class="linea ${entra ? '' : 'l-sale'}" pathLength="100" d="${ruta}"/>`;
+    pulsos += `<path class="pulso" pathLength="200" style="animation-delay:${(i++ * .35).toFixed(2)}s" d="${ruta}"/>`;
+  });
+  svg.innerHTML = lineas + pulsos;
+}
+addEventListener('resize', dibujarLineas);
+dibujarLineas();
+// Se monta al entrar: IA → entradas → líneas → salidas → pulsos.
+setTimeout(() => document.getElementById('esquema').classList.add('montado'), 150);
+
+// ── Aparecer al bajar (con un poco de escalera en los bloques).
+document.querySelectorAll('.bloque, .muestra, .principio, .contacto, section .titulo-seccion').forEach(el => el.classList.add('aparece'));
+document.querySelectorAll('.bloque').forEach((b, i) => b.style.transitionDelay = (i % 2 * .1) + 's');
+document.querySelectorAll('.principio').forEach((p, i) => p.style.transitionDelay = (i * .1) + 's');
+const vigia = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); vigia.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .12 });
+document.querySelectorAll('.aparece').forEach(el => vigia.observe(el));
+
+// ── Frase grande: cada palabra se enciende según bajas.
+const frase = document.getElementById('frase'), titular = frase.querySelector('h2');
+if (!titular.querySelector('.palabra')) {
+  const textos = [], w = document.createTreeWalker(titular, NodeFilter.SHOW_TEXT);
+  while (w.nextNode()) textos.push(w.currentNode);
+  textos.forEach(t => {
+    const trozo = document.createDocumentFragment();
+    t.textContent.split(/(\s+)/).forEach(s => {
+      if (!s) return;
+      if (/^\s+$/.test(s)) { trozo.append(s); return; }
+      const p = document.createElement('span'); p.className = 'palabra'; p.textContent = s; trozo.append(p);
+    });
+    t.replaceWith(trozo);
+  });
+}
+const palabras = [...titular.querySelectorAll('.palabra')];
+const pasos = [...document.querySelectorAll('#pasos .paso')], carril = document.getElementById('carril');
+const entre = (x) => Math.max(0, Math.min(1, x));
+const horas = [...document.querySelectorAll('.hora')], pantallasDia = [...document.querySelectorAll('#tel-dia .pantalla')];
+let horaActual = -1;
+let pendiente = false;
+function alBajar() {
+  pendiente = false;
+  const vh = innerHeight;
+  const f = frase.getBoundingClientRect();
+  const pf = entre((vh * .55 - f.top) / (f.height - vh * .45));
+  const n = Math.ceil(pf * palabras.length * 1.08);
+  palabras.forEach((p, i) => p.classList.toggle('on', i < n));
+  const m = document.getElementById('pasos').getBoundingClientRect();
+  const pm = entre((vh * .85 - m.top) / (m.height + vh * .25));
+  carril.style.width = (pm * 100).toFixed(1) + '%';
+  pasos.forEach((p, i) => p.classList.toggle('encendido', pm > i / pasos.length + .04));
+  // Ejemplo de la barbería: la hora que pasa por la línea de lectura manda en el teléfono.
+  const linea = vh * (innerWidth < 980 ? .72 : .55);
+  let h = 0;
+  horas.forEach((el, i) => { const r = el.getBoundingClientRect(); if (r.top + r.height / 2 < linea) h = i; });
+  if (h !== horaActual) {
+    horaActual = h;
+    horas.forEach((el, i) => el.classList.toggle('actual', i === h));
+    pantallasDia.forEach(p => {
+      const activa = +p.dataset.h === h;
+      p.classList.toggle('activa', activa);
+      if (activa) animar(p);
+    });
+  }
+}
+addEventListener('scroll', () => { if (!pendiente) { pendiente = true; requestAnimationFrame(alBajar); } }, { passive: true });
+addEventListener('resize', alBajar);
+alBajar();
+
+// ── Tu negocio: la tarjeta cambia de negocio cada pocos segundos.
+const ejemplos = [...document.querySelectorAll('#ejemplos .ejemplo')], puntos = document.getElementById('puntos');
+puntos.innerHTML = ejemplos.map(() => '<i></i>').join('');
+let actual = 0;
+function mostrarEjemplo(i) {
+  actual = i;
+  ejemplos.forEach((e, j) => e.classList.toggle('activo', j === i));
+  [...puntos.children].forEach((p, j) => p.classList.toggle('activo', j === i));
+}
+mostrarEjemplo(0);
+setInterval(() => { if (!document.documentElement.classList.contains('editando') && !document.hidden) mostrarEjemplo((actual + 1) % ejemplos.length); }, 3200);
+
+// ── Teléfonos: vuelve a reproducir la pantalla (mensajes que van saliendo uno a uno).
+function animar(pantalla) {
+  const paso = parseFloat(pantalla.dataset.paso || '.6');
+  pantalla.querySelectorAll('[data-d]').forEach((el, i) => {
+    el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+    el.style.animationDelay = (i * paso).toFixed(2) + 's';
+  });
+}
+
+// ── Servicios: al tocar uno, el teléfono enseña su ejemplo.
+const chips = document.querySelectorAll('.chip');
+function ver(k, desplazar) {
+  chips.forEach(ch => ch.classList.toggle('visto', ch.dataset.k === k));
+  document.querySelectorAll('.bloque').forEach(b => b.classList.toggle('visto', !!b.querySelector(`.chip[data-k="${k}"]`)));
+  document.querySelectorAll('.vista').forEach(v => {
+    const activa = v.dataset.k === k;
+    v.classList.toggle('activa', activa);
+    if (activa) animar(v.querySelector('.pantalla'));
+  });
+  if (desplazar && innerWidth < 980) document.getElementById('muestra').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+chips.forEach(ch => ch.addEventListener('click', () => ver(ch.dataset.k, true)));
+ver('whatsapp', false);
+
+// ── Precios: los ejemplos solo se ven al pulsar el botón.
+const botonPrecios = document.getElementById('ver-precios'), planes = document.getElementById('planes');
+botonPrecios.addEventListener('click', () => {
+  const abrir = !planes.classList.contains('abierto');
+  planes.classList.toggle('abierto', abrir);
+  botonPrecios.setAttribute('aria-expanded', abrir);
+  botonPrecios.textContent = abrir ? 'Ocultar ejemplos' : 'Ver ejemplos de precio';
+});
+
+// ── Me interesa: según cómo quiera que le contactemos, pide teléfono o correo.
+const campoTel = document.getElementById('campo-telefono'), campoEmail = document.getElementById('campo-email');
+document.querySelectorAll('input[name="contacto"]').forEach(r => r.addEventListener('change', () => {
+  const correo = r.value === 'correo' && r.checked;
+  if (!r.checked) return;
+  campoTel.hidden = correo; campoEmail.hidden = !correo;
+}));
+
+// ── Modo edición (solo en local): abrir con ?editar al final.
+if (/[?&]editar\b/.test(location.search)) { const s = document.createElement('script'); s.src = 'editar.js'; document.head.append(s); }
+
+// ── "Me interesa": va a nuestro n8n, que lo guarda y avisa al móvil.
+const DESTINO = 'https://alta.gzlab.cloud/webhook/alta-interesa';
+const f = document.getElementById('formulario');
+const res = document.getElementById('resultado');
+const boton = document.getElementById('enviar');
+f.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(f));
+  const contacto = d.contacto || 'whatsapp';
+  const nombre = (d.nombre || '').trim(), negocio = (d.negocio || '').trim();
+  const telefono = contacto === 'correo' ? '' : (d.telefono || '').trim();
+  const email = contacto === 'correo' ? (d.email || '').trim() : '';
+  const cifras = telefono.replace(/[^0-9]/g, '');
+  res.className = 'resultado mal';
+  if (!nombre || !negocio) { res.textContent = 'Rellena tu nombre y tu negocio.'; return; }
+  if (contacto === 'correo') {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { res.textContent = 'Revisa el correo.'; return; }
+  } else if (cifras.length < 9 || cifras.length > 15) { res.textContent = telefono ? 'Revisa el teléfono.' : 'Pon un teléfono para poder contactarte.'; return; }
+  if (!d.acepto) { res.textContent = 'Para contactarte necesitamos que aceptes la política de privacidad.'; return; }
+  boton.disabled = true; res.className = 'resultado'; res.textContent = 'Enviando…';
+  try {
+    const r = await fetch(DESTINO, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nombre, negocio, telefono, email, contacto, web: d.web || '' }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !j.ok) throw new Error(j.mensaje || 'error');
+    document.getElementById('gracias-texto').textContent = contacto === 'llamada' ? 'Te llamamos muy pronto.' : contacto === 'correo' ? 'Te escribimos muy pronto por correo.' : 'Te escribimos muy pronto por WhatsApp.';
+    document.getElementById('pedir').style.display = 'none';
+    document.getElementById('gracias').style.display = 'block';
+  } catch (err) {
+    res.className = 'resultado mal';
+    res.textContent = 'No se ha podido enviar. Prueba otra vez o escríbenos a gzlab026@gmail.com.';
+    boton.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
