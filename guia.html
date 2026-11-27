@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía de uso · GZLab</title>
+<meta name="description" content="Cómo funciona tu barbería con GZLab: la recepcionista con IA, la app y lo que haces tú.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#14161B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314161B'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='28' font-weight='700' fill='%23D6B04A' text-anchor='middle'%3EGZ%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#14161B; --s1:#1B1E25; --s2:#232730; --li:#2F3440; --li2:#454B59;
+  --tx:#F4EFE4; --mu:#B9B2A4; --ac:#D6B04A; --ac2:#F0D27A; --acBg:rgba(214,176,74,.10); --acLi:rgba(214,176,74,.45);
+  --pu:#A58BFF; --puBg:rgba(165,139,255,.12); --puLi:rgba(165,139,255,.5); --ok:#8FD19E;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Code",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+.contenedor{max-width:860px;margin:0 auto;padding:32px 16px 72px}
+@media (min-width:720px){.contenedor{padding:56px 32px 96px}}
+a{color:var(--ac)}
+.volver{display:inline-block;margin-bottom:28px;text-decoration:none;color:var(--mu);font-size:15px}
+.volver:hover{color:var(--tx)}
+.mini{font-family:var(--mono);font-size:12.5px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(32px,6vw,48px);line-height:1.08;letter-spacing:-.03em;margin:12px 0 12px;font-weight:750}
+h1 b{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.entradilla{color:var(--mu);font-size:18px;margin:0 0 28px;max-width:620px}
+h2{font-size:clamp(23px,3.6vw,30px);letter-spacing:-.02em;line-height:1.15;margin:0 0 6px;font-weight:720}
+h2 .n{font-family:var(--mono);font-size:.6em;color:var(--ac);vertical-align:.35em;margin-right:8px;font-weight:600}
+section{padding:44px 0;border-top:1px solid var(--li)}
+.sub{color:var(--mu);margin:0 0 22px}
+ul{margin:0;padding-left:20px}
+li{margin:4px 0;color:var(--mu)}
+li b,p b{color:var(--tx);font-weight:600}
+
+/* Índice */
+.indice{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px;padding:0;list-style:none}
+.indice a{display:inline-block;text-decoration:none;color:var(--mu);font-size:14px;border:1px solid var(--li2);border-radius:999px;padding:6px 13px}
+.indice a:hover{color:var(--tx);border-color:var(--ac)}
+
+/* Esquemas */
+.flujo{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:8px 0 22px}
+@media (min-width:720px){.flujo{flex-direction:row;align-items:stretch}}
+.paso{flex:1;background:var(--s1);border:1px solid var(--li2);border-radius:14px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.paso .t{font-weight:650;font-size:15.5px}
+.paso .e{color:var(--mu);font-size:13.5px;line-height:1.4}
+.paso.ia{border-color:var(--pu);background:radial-gradient(circle at 50% 0%,var(--puBg),transparent 80%),var(--s1)}
+.paso.ia .t{color:var(--pu)}
+.paso.tu{border-color:var(--acLi);background:linear-gradient(180deg,var(--acBg),var(--s1))}
+.paso.tu .t{color:var(--ac)}
+.flecha{display:grid;place-items:center;color:var(--li2);font-size:18px;padding:4px 0;flex:none}
+.flecha::before{content:"↓"}
+@media (min-width:720px){.flecha{padding:0 6px}.flecha::before{content:"→"}}
+
+/* Tarjetas */
+.rejilla{display:grid;gap:12px}
+@media (min-width:640px){.rejilla{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:860px){.rejilla.tres{grid-template-columns:repeat(3,1fr)}}
+.tarjeta{background:var(--s1);border:1px solid var(--li);border-radius:16px;padding:18px}
+.tarjeta h3{margin:0 0 8px;font-size:17px;display:flex;align-items:center;gap:10px}
+.tarjeta h3 .ic{width:30px;height:30px;border-radius:9px;background:var(--acBg);border:1px solid rgba(214,176,74,.3);display:grid;place-items:center;font-size:15px;flex:none}
+.tarjeta.ia{border-color:var(--puLi)}
+.tarjeta.ia h3 .ic{background:var(--puBg);border-color:var(--puLi)}
+.tarjeta.tu{border-color:var(--acLi)}
+
+/* Pasos numerados */
+.numerados{counter-reset:p;list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.numerados li{counter-increment:p;position:relative;padding:12px 14px 12px 52px;background:var(--s1);border:1px solid var(--li);border-radius:14px;margin:0;color:var(--mu)}
+.numerados li::before{content:counter(p);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:50%;background:var(--acBg);border:1px solid var(--acLi);color:var(--ac);font-family:var(--mono);font-size:13px;display:grid;place-items:center}
+
+/* Tabla quiero → dónde */
+.tabla{width:100%;border-collapse:separate;border-spacing:0;background:var(--s1);border:1px solid var(--li);border-radius:16px;overflow:hidden;font-size:15px}
+.tabla th,.tabla td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--li);vertical-align:top}
+.tabla tr:last-child td{border-bottom:0}
+.tabla th{font-family:var(--mono);font-size:12px;color:var(--ac);letter-spacing:.06em;text-transform:uppercase;font-weight:600;background:var(--s2)}
+.tabla td:first-child{color:var(--tx);font-weight:550;width:46%}
+.tabla td:last-child{color:var(--mu)}
+.ruta{font-family:var(--mono);font-size:13px;color:var(--tx);background:var(--s2);border:1px solid var(--li2);border-radius:6px;padding:1px 6px;white-space:nowrap}
+
+.nota{margin-top:18px;padding:14px 16px;border-radius:14px;border:1px dashed var(--puLi);background:var(--puBg);color:var(--mu);font-size:15px}
+.nota b{color:var(--tx)}
+footer{margin-top:24px;padding-top:24px;border-top:1px solid var(--li);color:var(--mu);font-size:14px}
+/* Bloques de funciones */
+.bloques{display:grid;gap:12px}
+@media (min-width:640px){.bloques{grid-template-columns:repeat(2,1fr)}}
+.bloque{background:var(--s1);border:1px solid var(--li);border-radius:16px;padding:16px 18px}
+.bloque .nom{font-family:var(--mono);font-size:12px;color:var(--ac);letter-spacing:.08em;text-transform:uppercase}
+.bloque h3{margin:4px 0 10px;font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13.5px;border:1px solid var(--li2);border-radius:999px;padding:4px 11px;color:var(--tx);background:var(--s2)}
+.chip.ia{border-color:var(--puLi);background:var(--puBg)}
+.bloque.viene{border-style:dashed;border-color:var(--puLi);grid-column:1/-1}
+.bloque.viene .nom{color:var(--pu)}
+.bloque.viene .chip{color:var(--mu);background:transparent;border-style:dashed}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:6px}
+@media print{body{background:#fff;color:#000}.volver,.indice{display:none}}
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="index.html">← Volver a GZLab</a>
+  <div class="mini">Guía de uso</div>
+  <h1>Tu barbería, <b>funcionando sola</b>.</h1>
+  <p class="entradilla">Lo justo para empezar: cómo trabaja la recepcionista, qué ves en tu app y qué te toca a ti.</p>
+
+  <ul class="indice">
+    <li><a href="#como">Cómo funciona</a></li>
+    <li><a href="#todo">Todo lo que hace</a></li>
+    <li><a href="#empezar">Primer día</a></li>
+    <li><a href="#app">Tu app</a></li>
+    <li><a href="#cita">Una cita</a></li>
+    <li><a href="#quiero">Quiero…</a></li>
+    <li><a href="#ia">La IA</a></li>
+    <li><a href="#consejos">Consejos</a></li>
+    <li><a href="#falla">Si algo falla</a></li>
+  </ul>
+
+  <!-- 1 -->
+  <section id="como">
+    <h2><span class="n">01</span>Cómo funciona</h2>
+    <p class="sub">El cliente escribe o llama. La IA le atiende y lo apunta. Tú te enteras en el móvil.</p>
+    <div class="flujo" role="img" aria-label="Cliente, luego la IA, luego la agenda, luego tú">
+      <div class="paso"><span class="t">Cliente</span><span class="e">WhatsApp o llamada, a cualquier hora</span></div>
+      <div class="flecha" aria-hidden="true"></div>
+      <div class="paso ia"><span class="t">IA</span><span class="e">Entiende, mira huecos y responde</span></div>
+      <div class="flecha" aria-hidden="true"></div>
+      <div class="paso"><span class="t">Agenda</span><span class="e">La cita queda apuntada al momento</span></div>
+      <div class="flecha" aria-hidden="true"></div>
+      <div class="paso tu"><span class="t">Tú</span><span class="e">Aviso al móvil y lo ves en la app</span></div>
+    </div>
+    <ul>
+      <li><b>Atiende 24 h</b>, también cuando estás cortando.</li>
+      <li><b>Reserva, cambia y anula</b> citas ella sola.</li>
+      <li>Lo que no puede resolver → <b>te deja un recado</b>.</li>
+      <li><b>Un solo sitio</b> para todo: tu app.</li>
+    </ul>
+  </section>
+
+  <!-- 2 -->
+  <section id="todo">
+    <h2><span class="n">02</span>Todo lo que hace por ti</h2>
+    <p class="sub">Atender es solo el principio. Según lo que tengas contratado:</p>
+    <div class="bloques">
+      <div class="bloque"><div class="nom">Atender</div><h3>Siempre abierto.</h3>
+        <div class="chips"><span class="chip ia">WhatsApp con IA</span><span class="chip ia">Teléfono con IA</span></div></div>
+      <div class="bloque"><div class="nom">Organizar</div><h3>Todo en su sitio.</h3>
+        <div class="chips"><span class="chip">Agenda</span><span class="chip">Fichas de clientes</span><span class="chip">Conversaciones</span><span class="chip">Ausencias y cancelaciones</span><span class="chip">Citas fijas</span></div></div>
+      <div class="bloque"><div class="nom">Fidelizar</div><h3>Que vuelvan.</h3>
+        <div class="chips"><span class="chip">Recordatorios por WhatsApp</span></div></div>
+      <div class="bloque"><div class="nom">Controlar</div><h3>Tus números, claros.</h3>
+        <div class="chips"><span class="chip">Avisos al móvil</span><span class="chip">Resumen del día</span><span class="chip">Resultados en gráficos</span></div></div>
+      <div class="bloque viene"><div class="nom">Y lo que viene</div><h3>Cada vez hace más.</h3>
+        <div class="chips"><span class="chip">Reseñas en Google</span><span class="chip">Campañas por WhatsApp</span><span class="chip">Bonos mensuales</span><span class="chip">Agenda por profesional</span><span class="chip">Idiomas</span></div></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="empezar">
+    <h2><span class="n">03</span>Primer día</h2>
+    <p class="sub">Cinco minutos y listo.</p>
+    <ol class="numerados">
+      <li>Abre <b>tu app</b> en el móvil y entra con <b>tu contraseña</b>.</li>
+      <li><b>Añádela a la pantalla de inicio</b> (menú del navegador → «Añadir a pantalla de inicio»). En iPhone, desde Safari.</li>
+      <li>Activa los avisos: <span class="ruta">Ajustes → Avisos al móvil</span>.</li>
+      <li>Repasa <b>horario, servicios y barberos</b> en <span class="ruta">Ajustes</span>.</li>
+      <li>Ponle <b>nombre y forma de hablar</b> a la IA: <span class="ruta">Ajustes → Recepcionista</span>.</li>
+    </ol>
+  </section>
+
+  <!-- 3 -->
+  <section id="app">
+    <h2><span class="n">04</span>Tu app</h2>
+    <p class="sub">Seis pestañas abajo. La campana de arriba son los avisos pendientes.</p>
+    <div class="rejilla tres">
+      <div class="tarjeta"><h3><span class="ic">📅</span>Agenda</h3>
+        <ul><li>Día, semana o mes.</li><li>Toca un hueco <b>«+ Libre»</b> para dar cita.</li><li>Toca una cita para cambiarla o anularla.</li></ul></div>
+      <div class="tarjeta"><h3><span class="ic">🔔</span>Avisos</h3>
+        <ul><li>Recados de la IA para ti.</li><li><b>Llamar</b>, <b>Dar cita</b> o <b>Resuelto</b>.</li></ul></div>
+      <div class="tarjeta"><h3><span class="ic">👤</span>Clientes</h3>
+        <ul><li>Busca por nombre o teléfono.</li><li>Visitas, lo que suele pedir, notas privadas.</li><li>Bloquear a quien no viene.</li></ul></div>
+      <div class="tarjeta"><h3><span class="ic">💬</span>Chats</h3>
+        <ul><li>Lo que la IA ha hablado con cada cliente.</li><li>Últimos 14 días. Solo para leer.</li></ul></div>
+      <div class="tarjeta"><h3><span class="ic">📊</span>Números</h3>
+        <ul><li>Citas e ingresos del mes.</li><li>Comparado con el mes pasado.</li><li>Por dónde llegan las citas.</li></ul></div>
+      <div class="tarjeta"><h3><span class="ic">⚙️</span>Ajustes</h3>
+        <ul><li>Horario, cierres, servicios, barberos.</li><li>La IA, recordatorios y avisos.</li><li>Modo claro u oscuro.</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="cita">
+    <h2><span class="n">05</span>La vida de una cita</h2>
+    <p class="sub">De la reserva a la silla, sin que tengas que hacer nada.</p>
+    <div class="flujo" role="img" aria-label="Reserva, aviso, recordatorio, el cliente viene">
+      <div class="paso ia"><span class="t">Reserva</span><span class="e">La IA o tú, desde la app</span></div>
+      <div class="flecha" aria-hidden="true"></div>
+      <div class="paso tu"><span class="t">Aviso</span><span class="e">Te llega al móvil, si lo tienes activado</span></div>
+      <div class="flecha" aria-hidden="true"></div>
+      <div class="paso"><span class="t">Recordatorio</span><span class="e">WhatsApp al cliente la víspera o esa mañana</span></div>
+      <div class="flecha" aria-hidden="true"></div>
+      <div class="paso"><span class="t">Viene</span><span class="e">Si no viene, márcalo: <b>«No vino»</b></span></div>
+    </div>
+    <ul>
+      <li>En cada cita: <b>quién, qué servicio, con qué barbero y una nota</b>.</li>
+      <li>El <b>historial</b> de la cita dice quién la hizo y quién la tocó.</li>
+      <li>¿La anuló sin querer? <b>«Recuperar»</b>.</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section id="quiero">
+    <h2><span class="n">06</span>Quiero…</h2>
+    <p class="sub">Lo que más vas a hacer, y dónde está.</p>
+    <table class="tabla">
+      <thead><tr><th>Quiero</th><th>Dónde</th></tr></thead>
+      <tbody>
+        <tr><td>Dar una cita yo</td><td><span class="ruta">Agenda → + Nueva cita</span> o toca un hueco libre</td></tr>
+        <tr><td>Cambiar o anular una cita</td><td>Toca la cita → <b>Cambiar</b> o <b>Cancelar cita</b></td></tr>
+        <tr><td>Cerrar por vacaciones o festivo</td><td><span class="ruta">Ajustes → Cierres y vacaciones</span></td></tr>
+        <tr><td>Abrir distinto un día</td><td><span class="ruta">Ajustes → Horarios especiales</span></td></tr>
+        <tr><td>Un barbero no viene</td><td><span class="ruta">Ajustes → Barbero fuera</span></td></tr>
+        <tr><td>Cambiar precios o servicios</td><td><span class="ruta">Ajustes → Servicios</span></td></tr>
+        <tr><td>Que la IA sepa algo (pagos, aparcamiento…)</td><td><span class="ruta">Ajustes → Preguntas frecuentes</span> o <span class="ruta">Datos de la barbería</span></td></tr>
+        <tr><td>Un cliente que viene cada semana</td><td><span class="ruta">Ajustes → Citas fijas</span></td></tr>
+        <tr><td>Que alguien no pueda reservar</td><td>Su ficha en <span class="ruta">Clientes</span> → <b>Bloquear cliente</b></td></tr>
+        <tr><td>Encender o apagar recordatorios</td><td><span class="ruta">Ajustes → Recordatorios a los clientes</span></td></tr>
+        <tr><td>Cuántas citas puede tener un cliente</td><td><span class="ruta">Ajustes → Reglas de reserva</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 6 -->
+  <section id="ia">
+    <h2><span class="n">07</span>La IA, en claro</h2>
+    <p class="sub">Habla como una persona y entiende como se lo digan. Lo que no le toca, te lo pasa.</p>
+    <div class="rejilla">
+      <div class="tarjeta ia"><h3><span class="ic">✨</span>Lo hace ella</h3>
+        <ul><li>Reservar, cambiar y anular.</li><li>Huecos, precios, horario y dirección.</li><li>Entender «un degradado», «lo de siempre», «con el jefe».</li><li>Varias citas seguidas (padre e hijo).</li></ul></div>
+      <div class="tarjeta tu"><h3><span class="ic">📩</span>Te lo pasa a ti</h3>
+        <ul><li>Quejas y comerciales.</li><li>Quien quiere hablar contigo.</li><li>Lo que no sabe o no está en tus servicios.</li><li>Tocar la cita de otra persona.</li></ul></div>
+    </div>
+    <ul style="margin-top:16px">
+      <li><b>Nunca inventa</b>: huecos y precios salen de tu agenda y tus ajustes.</li>
+      <li><b>No promete descuentos</b> ni nada que no hayas puesto.</li>
+      <li>Si alguien viene a <b>molestar</b>, le corta con educación.</li>
+    </ul>
+  </section>
+
+  <!-- 7 -->
+  <section id="consejos">
+    <h2><span class="n">08</span>Consejos</h2>
+    <p class="sub">Cuanto mejor la informes, mejor atiende.</p>
+    <ul>
+      <li>En cada servicio, rellena <b>«Cómo lo piden los clientes»</b>: fade, rapado, el completo…</li>
+      <li>Añade <b>preguntas frecuentes</b>: Bizum, niños, llegar tarde, aparcamiento.</li>
+      <li>Apunta <b>vacaciones y festivos</b> con tiempo: así no da citas esos días.</li>
+      <li>La primera semana, <b>échale un ojo a los Chats</b>: verás cómo habla.</li>
+      <li>Marca <b>«No vino»</b>: así tus números son reales.</li>
+    </ul>
+  </section>
+
+  <!-- 8 -->
+  <section id="falla">
+    <h2><span class="n">09</span>Si algo falla</h2>
+    <p class="sub">Está pensado para que el cliente nunca se quede tirado.</p>
+    <div class="flujo" role="img" aria-label="Si la IA falla, el cliente recibe tu teléfono o un recado, y nosotros lo vemos">
+      <div class="paso ia"><span class="t">La IA no puede</span><span class="e">Un fallo técnico, por raro que sea</span></div>
+      <div class="flecha" aria-hidden="true"></div>
+      <div class="paso"><span class="t">El cliente</span><span class="e">Recibe tu teléfono o le dejamos su recado</span></div>
+      <div class="flecha" aria-hidden="true"></div>
+      <div class="paso tu"><span class="t">Nosotros</span><span class="e">Nos llega el aviso y lo arreglamos</span></div>
+    </div>
+    <ul>
+      <li>Cada noche se hace <b>copia de seguridad</b> de todo.</li>
+      <li>¿Algo raro? Escríbenos a <a href="mailto:gzlab026@gmail.com">gzlab026@gmail.com</a>.</li>
+    </ul>
+    <p class="nota"><b>Recuerda:</b> todo se cambia desde tu app, cuando quieras. Si no sabes dónde está algo, pregúntanos.</p>
+  </section>
+
+  <footer>GZLab · Guía de uso · noviembre de 2026</footer>
+</div>
+</body>
+</html>
