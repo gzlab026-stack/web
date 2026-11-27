@@ -93,6 +93,43 @@ h1 .dorado{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-backgr
 .pie-flujo b{color:var(--pu);font-weight:600}
 @media (max-width:420px){.nodo{padding:7px 8px}.nodo .t{font-size:12.5px}.nodo .e{font-size:10.5px}}
 
+/* Tu horario vuelve a ser tuyo: dos barras de 24 h, tu día y el de la IA (27/11) */
+#horario .titulo-seccion{max-width:760px}
+.dia24{background:linear-gradient(180deg,var(--s1),rgba(27,30,37,.6));border:1px solid var(--li);border-radius:22px;padding:22px 16px 20px}
+@media (min-width:720px){.dia24{padding:30px 30px 26px}}
+.filas24{display:grid;grid-template-columns:auto 1fr;gap:10px 12px;align-items:center}
+.filas24 .quien{font-weight:700;font-size:14px;text-align:right}
+.filas24 .quien.de-ia{color:var(--pu)}
+.barra24{display:flex;height:30px;border-radius:9px;overflow:hidden}
+.barra24 span{display:grid;place-items:center;font-size:12.5px;font-weight:600;padding:0 4px;min-width:0;overflow:hidden;white-space:nowrap;border-right:1px solid var(--bg)}
+.barra24 span:last-child{border-right:0}
+.barra24 .libre{background:var(--s2);color:var(--mu)}
+.barra24 .curro{background:linear-gradient(180deg,var(--ac2),var(--ac));color:#14161B}
+.barra24.de-ia{background:rgba(165,139,255,.16);box-shadow:inset 0 0 0 1px var(--puLi)}
+.barra24.de-ia span{width:100%;color:var(--pu);border:0}
+.dia24.visible .barra24.de-ia{animation:iaLate 2.8s ease-in-out infinite}
+@keyframes iaLate{50%{background:rgba(165,139,255,.30)}}
+.barra24 .corto{display:none}
+@media (max-width:560px){.barra24 span{font-size:10.5px}.barra24 .largo{display:none}.barra24 .corto{display:inline}}
+.horas24{position:relative;height:18px;font-family:var(--mono);font-size:11px;color:var(--mu)}
+.horas24 span{position:absolute;transform:translateX(-50%)}
+.horas24 span:first-child{transform:none}.horas24 span:last-child{transform:translateX(-100%)}
+.momentos{display:grid;gap:12px;margin-top:22px}
+@media (min-width:760px){.momentos{grid-template-columns:repeat(3,1fr)}}
+.momento{background:var(--s1);border:1px solid var(--puLi);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.dia24.visible .momento{opacity:1;transform:none}
+.momento .cuando{font-family:var(--mono);font-size:12px;color:var(--pu);display:flex;justify-content:space-between;gap:8px}
+.momento .cuando b{color:var(--tx);font-weight:600}
+.momento .dice{font-size:15px;color:var(--tx)}
+.momento .hace{font-size:13.5px;color:var(--mu)}
+.momento .hace::before{content:"IA · ";color:var(--pu);font-family:var(--mono);font-size:12px}
+.ni{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.ni span{font-size:15px;font-weight:600;border:1px solid var(--li2);border-radius:999px;padding:8px 16px}
+.remate{margin:18px 0 0;color:var(--mu);font-size:17px}
+.remate strong{color:var(--tx)}
+.tu-cierras{margin:-4px 0 10px;font-family:var(--mono);font-size:13px;color:var(--ac)}
+@media (prefers-reduced-motion:reduce){.barra24.de-ia,.momento{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}}
+
 /* Secciones */
 section{padding:72px 0}
 @media (min-width:960px){section{padding:96px 0}}
@@ -472,6 +509,34 @@ footer a:hover{color:var(--tx)}
     </div>
   </div>
 
+  <!-- TU HORARIO VUELVE A SER TUYO (27/11) -->
+  <section id="horario">
+    <div class="contenedor">
+      <div class="titulo-seccion aparece">
+        <span class="mini">Tu tiempo</span>
+        <h2>Tu horario vuelve a ser <span class="morado">tuyo</span>.</h2>
+        <p>Se acabó trabajar fuera de horas. Tú cierras. La IA sigue.</p>
+      </div>
+      <div class="dia24 aparece" role="img" aria-label="Tu día: durmiendo, trabajando de 9 a 20 y luego ocio. La IA atiende las 24 horas.">
+        <div class="filas24">
+          <span class="quien">Tú</span>
+          <div class="barra24"><span class="libre" style="width:37.5%">Durmiendo</span><span class="curro" style="width:45.833%">Trabajando</span><span class="libre" style="width:16.667%">Ocio</span></div>
+          <span class="quien de-ia">IA</span>
+          <div class="barra24 de-ia"><span>Atendiendo las 24 horas</span></div>
+          <span></span>
+          <div class="horas24"><span style="left:0">0 h</span><span style="left:37.5%">9</span><span style="left:83.333%">20</span><span style="left:100%">24 h</span></div>
+        </div>
+        <div class="momentos">
+          <div class="momento" style="transition-delay:.3s"><span class="cuando"><b>7:40</b>antes de abrir</span><span class="dice">«¿Tienes hueco hoy por la mañana?»</span><span class="hace">Le da la cita de las 10:30.</span></div>
+          <div class="momento" style="transition-delay:.6s"><span class="cuando"><b>15:10</b>mientras trabajas</span><span class="dice">«¿Me pasas información del servicio?»</span><span class="hace">Se la da al momento, con precio y horarios.</span></div>
+          <div class="momento" style="transition-delay:.9s"><span class="cuando"><b>23:14</b>con todo cerrado</span><span class="dice">«¿Me apuntas el sábado?»</span><span class="hace">Reserva el sábado a las 11:00.</span></div>
+        </div>
+        <div class="ni"><span>Ni de noche</span><span>Ni en el descanso</span><span>Ni en tu día libre</span></div>
+        <p class="remate"><strong>Mañana abres y la agenda ya está hecha.</strong></p>
+      </div>
+    </div>
+  </section>
+
   <!-- SERVICIOS: 4 BLOQUES + A TU MEDIDA, CON EL TELÉFONO -->
   <section id="servicios">
     <div class="contenedor">
@@ -486,6 +551,7 @@ footer a:hover{color:var(--tx)}
             <article class="bloque">
               <div class="cab"><div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div><span class="nombre">Atender</span></div>
               <h3>Siempre abierto.</h3>
+              <p class="tu-cierras">Tú cierras. La IA sigue.</p>
               <p>La IA contesta por WhatsApp y por teléfono, con voz natural y a cualquier hora: da, cambia y cancela citas mirando tu agenda real y resuelve las dudas de tus clientes.</p>
               <div class="chips"><button class="chip" data-k="whatsapp">WhatsApp con IA</button><button class="chip" data-k="telefono">Teléfono con IA</button><button class="chip" data-k="numero">Tu número de siempre</button><button class="chip" data-k="idiomas">Idiomas</button></div>
             </article>
